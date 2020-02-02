@@ -87,6 +87,17 @@ a:hover
     text-transform: uppercase;
 }
 
+.opisZad{
+    background-color: #644E5B;
+    padding: 90px 80px;
+    font-size: 25px;
+    font-weight: lighter;
+}
+#osislojUl{
+    list-style-type: none;
+    margin-left: 150px;
+}
+
 footer{
     background-color: #314455;
     position: absolute;
