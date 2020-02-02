@@ -115,17 +115,25 @@ function checkValid(){
     
     else{
         ipfinalno+=ipbezpoc;
-        x = ipfinalno.split('');
-        x.unshift(':');
-        ipfinalno = x.join('');
-        
+      
         getSpliceValue();
+        //ako su nule na pocetku
+        if (pocetna==0){
+            x = ipfinalno.split('');
+            x.unshift(':');
+            ipfinalno = x.join('');
+            kraj-=pocetna;
+        }
+        //ako su nule u sredini adrese
+        else{
+            kraj-=pocetna+1;
+        }
+        
         console.log("pocetak: " + pocetna);
         console.log("kraj: " + kraj);
-        kraj-=pocetna+1;
+        
         x = ipfinalno.split('');
         x.splice(pocetna,kraj);
-        
         ipfinalno = x.join('');
   
        
