@@ -25,7 +25,7 @@ header{
     text-transform: uppercase;
     
 }
-
+/* header za odabir stranice*/
 #headmenu{
   display: flex;
   flex-direction: row;
@@ -44,7 +44,7 @@ border-top: #9E5A63 solid 3px;
     margin: auto;
     
 }
-
+/* izgled prvog paragrafa na svakoj stranici*/
 .p1{
     background-color: #644E5B;
     padding: 100px;
@@ -52,6 +52,7 @@ border-top: #9E5A63 solid 3px;
     font-weight: lighter;
 
 }
+/*izgled prvog paragrama na stranici računalne mreže*/
 .rmp1{
     background-color: #644E5B;
     padding: 100px;
@@ -85,4 +86,62 @@ a:hover
     font-size: 4vh;
     color: #9E5A63;
     text-transform: uppercase;
+}
+
+/* Izgled dijela za skraćivanje IPv6 adresa*/
+
+#divSkracivanje{
+    text-align: center;
+    margin: 20px;
+}
+
+#ipUpis{
+    width: 75vh;
+    height: 5vh;
+    margin: 25px;
+    font-size: 3vh;
+    text-align: center;
+    
+    
+}
+#ipGumb
+{
+    width: 20vh;
+    height: 5vh;
+    font-size: 15px;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: bold;
+    text-align: center;
+    color: #314455;
+    background-color: #C96567;
+    border:none;
+    cursor: pointer;
+}
+#ipGumb:hover,
+#clearGumb:hover
+{
+    color: white;
+    border: white 2px solid;
+  
+}
+#clearGumb{
+    width: 20vh;
+    height: 5vh;
+    font-size: 15px;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: bold;
+    text-align: center;
+    color: #314455;
+    background-color: #C96567;
+    border:none;
+    cursor: pointer;
+}
+
+#ipIspis{
+    margin: 25px 40vh;
+    padding: 10px 0px;
+    font-size: 50px;
+    background-color: #314455;
+    border: white 5px solid;
+       
 }

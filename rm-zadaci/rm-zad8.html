@@ -7,6 +7,8 @@
 
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/style.css">
+    <script src="ipv6.js"></script>
+    
 
     <title>Lukas WEBSAJT</title>
 </head>
@@ -20,5 +22,13 @@
         </ul>
     </header>
     <h2 class="zadnaslov">8. Zadatak - program za skraćivanje IPv6 adresa</h2>
+    <div id="divSkracivanje">
+        <input type="text" name="ipUpis" id="ipUpis" placeholder="upiši IPv6 adresu">
+        <br>
+        <input type="button" value="Skrati IPv6 adresu!" onclick="getIp()" id="ipGumb">
+        <input type="button" value="Resetiraj!" onclick="clearInput()" id="clearGumb">
+        <p id="ipIspis">Skraćena IPv6 adresa</p>
+    </div>
+ 
 </body>
 </html>
