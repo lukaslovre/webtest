@@ -172,5 +172,10 @@ function clearInput() {
 
 }
 
+//funkcija za kopiranje u clipboard
+function cpytoclpboard(ipprimjer){
+   let copyText = document.getElementById(ipprimjer.id).innerHTML;
+   document.getElementById("ipUpis").value=copyText;
+}
 
 

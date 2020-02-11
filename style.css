@@ -42,7 +42,13 @@ border-top: #9E5A63 solid 3px;
     margin: 20px;
     align-items: center;
     margin: auto;
-    
+    padding: 10px;
+}
+
+#headmenu a:hover{
+    color:#314455;
+    background-color: #C96567;
+    border-radius: 100px;
 }
 /* izgled prvog paragrafa na svakoj stranici*/
 .p1{
@@ -106,11 +112,6 @@ footer{
     width: 100%;
     padding: 15px 0px;
 }
-footer a{
-    color:white;
-    text-decoration: none;
-  
-}
 
 /* Izgled dijela za skraćivanje IPv6 adresa*/
 
@@ -125,10 +126,10 @@ footer a{
     margin: 25px;
     font-size: 3vh;
     text-align: center;
-    
-    
+    border-radius: 8px;
 }
-#ipGumb
+#ipGumb,
+#clearGumb
 {
     width: 20vh;
     height: 5vh;
@@ -140,6 +141,7 @@ footer a{
     background-color: #C96567;
     border:none;
     cursor: pointer;
+    border-radius: 100px;
 }
 #ipGumb:hover,
 #clearGumb:hover
@@ -148,18 +150,6 @@ footer a{
     border: white 2px solid;
   
 }
-#clearGumb{
-    width: 20vh;
-    height: 5vh;
-    font-size: 15px;
-    font-family: 'Open Sans', sans-serif;
-    font-weight: bold;
-    text-align: center;
-    color: #314455;
-    background-color: #C96567;
-    border:none;
-    cursor: pointer;
-}
 
 #ipIspis{
     margin: 25px 40vh;
@@ -167,5 +157,19 @@ footer a{
     font-size: 50px;
     background-color: #314455;
     border: white 5px solid;
+    border-radius: 15px;
        
+}
+/*primjeri ip adresa */
+#prim-ip{
+    text-align: center;
+    margin-top: 20px;
+    font-size: 22px;
+    background-color: #314455;
+    padding: 50px;
+}
+.primip:hover{
+    cursor: pointer;
+    color: greenyellow;
+    text-decoration: underline;
 }
