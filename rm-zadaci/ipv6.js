@@ -111,19 +111,18 @@ function checkValid(){
         document.getElementById("ipIspis").innerHTML=ipfinalno;
     }
         // ako nule nisu na kraju
-   
     
     else{
         ipfinalno+=ipbezpoc;
-      
         getSpliceValue();
         //ako su nule na pocetku
-        if (pocetna==0){
+        if (pocetna==0 || pocetna==undefined){
             x = ipfinalno.split('');
             x.unshift(':');
             ipfinalno = x.join('');
             kraj-=pocetna;
         }
+        
         //ako su nule u sredini adrese
         else{
             kraj-=pocetna+1;
