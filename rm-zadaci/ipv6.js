@@ -8,37 +8,35 @@ function getIp(){
     iporg = iporg.toString();
     checkValid();
 }
-
+//provjeravanje ispravnosti adrese:
 function checkValid(){
-    //provjeravanje ispravnosti adrese:
     for(let i=0; i < iporg.length;i++){
         let tmp = iporg.toLowerCase();
         if (!(((tmp[i]>='a' && tmp[i]<='f') || (tmp[i]>='0' && tmp[i]<='9')|| tmp[i]==':') && (tmp.length==39)))
         {
             alert("invalidna adresa!");
-            inv=true;
+            inv=true; 
             break;
         }
        
     }
     if (inv==false){
-        ipShort();
+        ipShort(); //ako je adresa pravilna, poziva funkciju za skraćivanje te adrese
     }
-    
 }
-    function ipShort(){
-    
+//funkcija za skraćivanje adrese
+function ipShort(){
     //dijeljenje adrese na 8 dijelova i micanje nula (i postavljanje ":0000:" u ":0:")
     let ipsplittemp='';
     let ipsplit=iporg.split(":")
     let fisn=false;
     console.log(ipsplittemp);
- 
+
     for (let i=0;i<ipsplit.length;i++){
         if (ipsplit[i][0]=='0'){
-            fisn=true;
+            fisn=true; //fisn=true ako je prva znamenka u kvartetu '0'
         }
-        for(let j=0;j<ipsplit[i].length;j++){
+        for(let j=0;j<ipsplit[i].length;j++){ //druga petlja koja ide samo po kvartetu 
             if (ipsplit[i][j]=='0' && fisn==true){
                 if(j==3){
                     ipsplittemp+='0';
@@ -48,7 +46,7 @@ function checkValid(){
                 }
                 
             }
-            else{
+            else{               //ako znamenka nije '0'
                 ipsplittemp+=ipsplit[i][j];
                 fisn=false;
             } 
@@ -56,7 +54,7 @@ function checkValid(){
         if(i!=ipsplit.length-1){
         ipsplittemp+=':';
         }
-    } 
+    }
     console.log("ipsplittemp: " + ipsplittemp);
 
     //uklanjanje više dvotočka u samo dvije
@@ -135,18 +133,14 @@ function checkValid(){
         x.splice(pocetna,kraj);
         ipfinalno = x.join('');
   
-       
         
         console.log("ipfinalno: " + ipfinalno);
         document.getElementById("ipIspis").innerHTML=ipfinalno;
         
     }
     console.log("Ipsplittemp nakon slice: " + ipbezpoc);
-    
-    
 
     //dobivanje adresa za rezanje
-  
     function getSpliceValue(){
     
         let activate=false;
@@ -164,14 +158,14 @@ function checkValid(){
     }
 }
 
-//funkcija za brisanje IPv6 adrese
+//funkcija za brisanje IPv6 adrese iz inputa
 function clearInput() {
     document.getElementById("ipUpis").value='';
     document.getElementById("ipIspis").innerHTML='Skraćena IPv6 adresa';
 
 }
 
-//funkcija za kopiranje u clipboard
+//funkcija za automatski upis IPv6 adresa
 function cpytoclpboard(ipprimjer){
    let copyText = document.getElementById(ipprimjer.id).innerHTML;
    document.getElementById("ipUpis").value=copyText;

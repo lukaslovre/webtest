@@ -175,3 +175,18 @@ footer{
     color: greenyellow;
     text-decoration: underline;
 }
+
+/*objasnjenje koda*/
+#kod{
+    width:50%;
+    margin: auto;
+}
+#kod p{
+    font-size: 30px;
+    text-align: center;
+    margin: 20px;
+    color: #9E5A63;
+    font-weight: bold;
+    border-bottom: solid #9E5A63 2px;
+    
+}
