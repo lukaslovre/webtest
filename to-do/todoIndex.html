@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do List</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="script.js"></script>
+
+
+</head>
+<body>
+    <div id="main">
+        <div id="header">
+            <h1>to-do list</h1>
+        </div>
+        <div id="task-box">
+            <ul id="tasks">
+                <li id="task1"><div class="taskDone" onclick="taskDone(this)"><i class="fa fa-check"></i></div> <div class="taskDiv">Moram oprati patku </div> <div class="deleteDiv" onclick="deleteTask(this)"> <i class="fa fa-trash"></i></div> </li>
+            </ul>
+        </div>
+        <div id="controls">
+            <input type="text" name="taskInput" id="taskInput">
+            <i id="plus" class="fa fa-plus" onclick="testAdd()"></i>
+        </div>
+    </div>
+</body>
+</html>
