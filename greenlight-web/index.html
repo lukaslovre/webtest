@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js"></script>
+    <title>GreenLight</title>
+</head>
+<body onload="somecode();">
+    <div id="header">
+        <h1>GreenLight</h1>
+    </div>
+    <div id="podnaslov">
+        <p>Aplikacija koja će vam uštediti vrijeme i novac</p>
+    </div>
+    <div id="text-center">
+        <div id="progress">
+            <p>Skupljeno <span id="kol-nov">0</span> HRK od 100 000 HRK (<span id="posto">0</span>%)</p>
+            <div id="myProgress">
+                <div id="myBar"></div>
+            </div>
+            <p id="donate-btn" onclick="document.getElementById('input-box').style.display='block'">Doniraj</p>
+            <div id="recent-dono">
+                <p>Nedavne donacije:</p>
+                <ul id="dono-lista">
+                </ul>
+            </div>
+        </div>
+        
+    </div>
+
+    <div id="input-box">
+        <p id="doniraj-txt">DONIRAJ</p>
+        <p class="top-input">IME I PREZIME</p>
+        <input id="naziv-donatora" type="text">
+        <p class="top-input">KOLIČINA NOVCA (HRK)</p>
+        <input type="number" name="cijena" id="donationAmount">
+        <br>
+        <p id="submit-btn" onclick="donateFun()">Doniraj</p>
+        <p id="cancel-btn" onclick="document.getElementById('input-box').style.display='none'">Odustani</p>
+    </div>
+    <div id="youtubeLink">
+        <iframe width="50%" height="550px" src="https://www.youtube.com/embed/0lS-1gBLlW4" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    </div>
+
+</body>
+</html>
