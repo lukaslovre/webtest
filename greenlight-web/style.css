@@ -143,16 +143,17 @@ input{
     border-radius: 100px;
     padding: 10px;
     font-size: 25px;
-    width: max-content;
+    width: 100px;
+    text-align: center;
     margin: 40px 0 0 0;
     border: 2px solid white;
     display: inline-block;
 }
 #submit-btn{
-    margin-left: 125px;
+    margin-left: 35px;
 }
 #cancel-btn{
-    margin-left: 35px;
+    margin-left: 110px;
 }
 
 #submit-btn:hover{ 
@@ -171,10 +172,47 @@ textarea:focus, input:focus{
 }
 
 #youtubeLink{
-    margin-top: 15px;
-    margin-bottom: 50px;
-    display:flex;
+    background-color: #112A46;
+    margin: 15px 25% 50px 25%;
+    padding-bottom: 30px;
+    border-radius: 20px;
+    color: white;
+    font-size: 21px;
+    text-align: center;
+    border: 2px solid #B7E4C7;
 }
 iframe{
-    margin: 0 auto 0 auto;
+    margin: 30px auto 70px auto;
+}
+h2{
+    text-align: center;
+    margin-bottom: 60px;
+    font-family: 'Scope One', serif;
+    font-weight: normal;
+    text-decoration: underline;
+    font-size: 48px;
+}
+#youtubeLink p{
+    padding-left: 30px;
+    padding-bottom: 50px;
+}
+#opisApk{
+    text-align: left;
+    line-height: 30px;
+    margin: 5px 50px 50px 50px;
+    padding-bottom: 90px;
+}
+#lista-nagrada{
+    text-align: left;
+    line-height: 30px;
+}
+#lista-nagrada li{
+    border-top: white 1px solid;
+    padding: 20px 20px 20px 40px;
+    margin: 0px 30px 0 30px;
+}
+
+.strong{
+    font-weight: bold;
+    font-size: 24px;
 }

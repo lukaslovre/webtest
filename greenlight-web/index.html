@@ -5,9 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
     <script src="script.js"></script>
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Scope+One&display=swap" rel="stylesheet">
     <title>GreenLight</title>
 </head>
-<body onload="somecode();">
+<body>
     <div id="header">
         <h1>GreenLight</h1>
     </div>
@@ -29,7 +32,7 @@
         </div>
         
     </div>
-
+    <!-- POPUP box za doniranje -->
     <div id="input-box">
         <p id="doniraj-txt">DONIRAJ</p>
         <p class="top-input">IME I PREZIME</p>
@@ -37,11 +40,33 @@
         <p class="top-input">KOLIČINA NOVCA (HRK)</p>
         <input type="number" name="cijena" id="donationAmount">
         <br>
-        <p id="submit-btn" onclick="donateFun()">Doniraj</p>
         <p id="cancel-btn" onclick="document.getElementById('input-box').style.display='none'">Odustani</p>
+        <p id="submit-btn" onclick="donateFun()">Doniraj</p>
     </div>
+
+    <!-- Youtube dio i opis -->
     <div id="youtubeLink">
-        <iframe width="50%" height="550px" src="https://www.youtube.com/embed/0lS-1gBLlW4" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        <iframe width="90%" height="480px" src="https://www.youtube.com/embed/kLRfZm_DaxU" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        <h2>Opis aplikacije</h2>
+        <p id="opisApk">Greenlight je aplikacija za navigaciju koja vam smanjuje vrijeme čekanja na semaforima. Uz pomoć napredne tehnologije i umjetne inteligencije aplikacija vam predlaže optimalnu 
+            brzinu kojom bi trebali voziti kako nebi nikad trebali čekati na semaforima. <br><br> Aplikacija je predviđena kao zamjena za default navigacijske aplikacije koje dolaze predinstalirane 
+            na vašim mobilnim uređajima. Korisničko sučelje je vrlo intuitvno i nije znatno različito od drugih sličnih aplikacija tako da vam se neće biti teško prilagoditi ako ste do sada 
+            za navigaciju koristili drugu aplikaciju i odlučili ste prijeći na Greenlight.</p>
+
+        <h2>Nagrade za donatore</h2>
+        <p class="strong">Ovisno koliko kuna donirate, možete dobiti različite stvari:</p>
+        <ul id="lista-nagrada">
+            <li>10 HRK - ime na službenoj listi donatora</li>
+            <li>50 HRK - GreenLight miris za auto</li>
+            <li>100 HRK - early access GreenLight aplikacije</li>
+            <li>200 HRK - jedna godina pretplate</li>
+            <li>500 HRK - tri godine pretplate</li>
+            <li>1,000 HRK - popust na INA benzinskim postajama od 1.5 kuna/litri narednih 5 godina</li>
+            <li>5,000 HRK - doživotna pretplata</li>
+            <li>10,000 HRK - pozicija ulagača (dionice)</li>
+            <li>50,000 HRK - ekskluzivna vožnja s poznatim vozačem Lewisom Hamiltonom po trkaćoj stazi Circuit de Monaco</li>
+            
+        </ul>
     </div>
 
 </body>

@@ -4,18 +4,30 @@ let ukupnoDonirano = 0;
 
 function donateFun(){
     //sve za inputiranje:!!!
-    let donatorName = document.getElementById('naziv-donatora').value;
-
-    donatorName = donatorName.toUpperCase();
-    document.getElementById('naziv-donatora').value= '';
+    let donatorName;
+    if(document.getElementById('naziv-donatora').value == ''){
+        donatorName = "ANONIMNO";
+        console.log(donatorName);
+    }
+    else{
+        donatorName = document.getElementById('naziv-donatora').value;
+        donatorName = donatorName.toUpperCase();
+        document.getElementById('naziv-donatora').value= '';
+    }
+    
     let donationAmount = document.getElementById('donationAmount').value;
     document.getElementById('donationAmount').value = '';
+
+    if(donationAmount <= 0 || donationAmount== NaN){
+        return;
+    }
+
     ukupnoDonirano += parseInt(donationAmount);
     console.log(ukupnoDonirano);
 
     document.getElementById("myBar").style.width = width + "%";
     document.getElementById("kol-nov").innerHTML= ukupnoDonirano;
-    width = parseInt(ukupnoDonirano / 100000 * 100);
+    width = parseInt(ukupnoDonirano / 100000 * 1000)/10;
     document.getElementById("posto").innerHTML= width;
 
     let ul = document.getElementById("dono-lista");
