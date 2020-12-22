@@ -27,12 +27,12 @@ function donateFun(){
 
     document.getElementById("myBar").style.width = width + "%";
     document.getElementById("kol-nov").innerHTML= ukupnoDonirano;
-    width = parseInt(ukupnoDonirano / 100000 * 1000)/10;
+    width = parseInt(ukupnoDonirano / 250000 * 1000)/10;
     document.getElementById("posto").innerHTML= width;
 
     let ul = document.getElementById("dono-lista");
     let li = document.createElement("li");
-    li.appendChild(document.createTextNode(donatorName + ' je donirao ' + donationAmount + ' HRK'));
+    li.appendChild(document.createTextNode(donatorName + ' je donirao ' + donationAmount + ' EUR'));
     ul.insertAdjacentElement('afterbegin',li);
     document.getElementById('input-box').style.display='none';
 
