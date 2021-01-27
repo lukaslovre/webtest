@@ -1,191 +1,205 @@
-
-
-*{
-    margin: 0;
-    padding: 0;
-    font-family: 'Open Sans', sans-serif;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Open Sans", sans-serif;
 }
 
-body{
-    background-color: #97AABD;
-    color: white;
+a {
+  text-decoration: none;
+}
+body {
+  background-color: #97aabd;
+  color: white;
 }
 
-h1{
-    text-align: center;
-    padding: 20px;
-    
+h1 {
+  text-align: center;
+  padding: 20px;
+}
+.todo-promo {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+}
+.bigButton {
+  margin: auto;
+  padding: 5px 15px;
+
+  background-color: #644e5b;
+  border-radius: 100px;
+  border: white 4px solid;
+  outline: none;
+
+  color: white;
+  font-size: 48px;
+  cursor: pointer;
+
+  transition: border 150ms, color 150ms;
+}
+.bigButton:hover {
+  border: 4px #c96567 solid;
+  color: #c96567;
 }
 
-header{
-    background-color: #314455;
-    color: #C96567;
-    font-size: 40px;
-    font-weight: lighter;
-    text-transform: uppercase;
-    
+header {
+  background-color: #314455;
+  color: #c96567;
+  font-size: 40px;
+  font-weight: lighter;
+  text-transform: uppercase;
 }
 /* header za odabir stranice*/
-#headmenu{
+#headmenu {
   display: flex;
   flex-direction: row;
   padding: 20px;
- 
-border-top: #9E5A63 solid 3px;
 
-    
+  border-top: #9e5a63 solid 3px;
 }
-#headmenu a{
-    color:#C96567;
-    text-decoration: none;
-    list-style-type: none;
-    align-items: center;
-    margin: auto;
-    padding: 10px;
+#headmenu a {
+  color: #c96567;
+  text-decoration: none;
+  list-style-type: none;
+  align-items: center;
+  margin: auto;
+  padding: 10px;
 }
 
-#headmenu a:hover{
-    color:#314455;
-    background-color: #C96567;
-    border-radius: 100px;
+#headmenu a:hover {
+  color: #314455;
+  background-color: #c96567;
+  border-radius: 100px;
 }
 /* izgled prvog paragrafa na svakoj stranici*/
-.p1{
-    background-color: #644E5B;
-    padding: 100px;
-    font-size: 25px;
-    font-weight: lighter;
+.p1 {
+  background-color: #644e5b;
+  padding: 100px;
+  font-size: 25px;
+  font-weight: lighter;
 }
 /*izgled prvog paragrama na stranici računalne mreže*/
-.rmp1{
-    background-color: #644E5B;
-    padding: 100px;
-    font-size: 25px;
-    font-weight: lighter;
+.rmp1 {
+  background-color: #644e5b;
+  padding: 100px;
+  font-size: 25px;
+  font-weight: lighter;
 }
 
-.rmp1 h2{
-    font-weight:normal;
+.rmp1 h2 {
+  font-weight: normal;
 }
-.rmp1 ul li{
-    margin: 1% 0 0 5%;
-  
-  
+.rmp1 ul li {
+  margin: 1% 0 0 5%;
 }
-.rmp1 a{
-    text-decoration: none;
-    color: white;
+.rmp1 a {
+  text-decoration: none;
+  color: white;
 }
 .rmp1 ul a li:hover,
-a:hover
-{
-    
-    opacity:0.6;
+a:hover {
+  opacity: 0.6;
 }
 
-.zadnaslov{
-    margin: 2%;
-    text-align: center;
-    font-weight: normal;
-    font-size: 4vh;
-    color: #9E5A63;
-    text-transform: uppercase;
+.zadnaslov {
+  margin: 2%;
+  text-align: center;
+  font-weight: normal;
+  font-size: 4vh;
+  color: #9e5a63;
+  text-transform: uppercase;
 }
 
-.opisZad{
-    background-color: #644E5B;
-    padding: 90px 80px;
-    font-size: 25px;
-    font-weight: lighter;
+.opisZad {
+  background-color: #644e5b;
+  padding: 90px 80px;
+  font-size: 25px;
+  font-weight: lighter;
 }
-#osislojUl{
-    list-style-type: none;
-    margin-left: 150px;
+#osislojUl {
+  list-style-type: none;
+  margin-left: 150px;
 }
 
-footer{
-    background-color: #314455;
-    position: absolute;
-    text-align: center;
-    bottom: 0px;
-    width: 100%;
-    padding: 15px 0px;
+footer {
+  background-color: #314455;
+  position: absolute;
+  text-align: center;
+  bottom: 0px;
+  width: 100%;
+  padding: 15px 0px;
 }
 
 /* Izgled dijela za skraćivanje IPv6 adresa*/
 
-#divSkracivanje{
-    text-align: center;
-    margin: 20px;
+#divSkracivanje {
+  text-align: center;
+  margin: 20px;
 }
 
-#ipUpis{
-    width: 700px;
-    height: 50px;
-    margin: 25px;
-    font-size: 30px;
-    text-align: center;
-    border-radius: 8px;
+#ipUpis {
+  width: 700px;
+  height: 50px;
+  margin: 25px;
+  font-size: 30px;
+  text-align: center;
+  border-radius: 8px;
 }
 #ipGumb,
-#clearGumb
-{
-    width: 180px;
-    height: 50px;
-    font-size: 15px;
-    font-family: 'Open Sans', sans-serif;
-    font-weight: bold;
-    text-align: center;
-    color: #314455;
-    background-color: #C96567;
-    border:none;
-    cursor: pointer;
-    border-radius: 200px;
+#clearGumb {
+  width: 180px;
+  height: 50px;
+  font-size: 15px;
+  font-family: "Open Sans", sans-serif;
+  font-weight: bold;
+  text-align: center;
+  color: #314455;
+  background-color: #c96567;
+  border: none;
+  cursor: pointer;
+  border-radius: 200px;
 }
 #ipGumb:hover,
-#clearGumb:hover
-{
-    color: white;
-    border: white 2px solid;
-  
+#clearGumb:hover {
+  color: white;
+  border: white 2px solid;
 }
 
-#ipIspis{
-    margin: 25px auto;
-    padding: 10px 0px;
-    width: 1000px;
-    align-self: center;
-    font-size: 50px;
-    background-color: #314455;
-    border: white 5px solid;
-    border-radius: 15px;
-       
+#ipIspis {
+  margin: 25px auto;
+  padding: 10px 0px;
+  width: 1000px;
+  align-self: center;
+  font-size: 50px;
+  background-color: #314455;
+  border: white 5px solid;
+  border-radius: 15px;
 }
 /*primjeri ip adresa */
-#prim-ip{
-    text-align: center;
-    margin-top: 20px;
-    font-size: 22px;
-    background-color: #314455;
-    padding: 50px;
+#prim-ip {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 22px;
+  background-color: #314455;
+  padding: 50px;
 }
-.primip:hover{
-    cursor: pointer;
-    color: greenyellow;
-    text-decoration: underline;
+.primip:hover {
+  cursor: pointer;
+  color: greenyellow;
+  text-decoration: underline;
 }
 
 /*objasnjenje koda*/
-#kod{
-    width:50%;
-    margin: auto;
+#kod {
+  width: 50%;
+  margin: auto;
 }
-#kod p{
-    font-size: 30px;
-    text-align: center;
-    margin: 20px;
-    color: #9E5A63;
-    font-weight: bold;
-    border-bottom: solid #9E5A63 2px;
-    
+#kod p {
+  font-size: 30px;
+  text-align: center;
+  margin: 20px;
+  color: #9e5a63;
+  font-weight: bold;
+  border-bottom: solid #9e5a63 2px;
 }
