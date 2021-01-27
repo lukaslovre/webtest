@@ -5,9 +5,6 @@
   font-family: "Open Sans", sans-serif;
 }
 
-a {
-  text-decoration: none;
-}
 body {
   background-color: #97aabd;
   color: white;
@@ -21,7 +18,12 @@ h1 {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  text-align: center;
+  text-align: c;
+}
+.todo-promo a {
+  transition: color 150ms;
+  color: white;
+  text-decoration: none;
 }
 .bigButton {
   margin: auto;
@@ -36,11 +38,14 @@ h1 {
   font-size: 48px;
   cursor: pointer;
 
-  transition: border 150ms, color 150ms;
+  transition: border 150ms;
 }
 .bigButton:hover {
   border: 4px #c96567 solid;
+}
+.bigButton:hover a {
   color: #c96567;
+  text-decoration: none;
 }
 
 header {
