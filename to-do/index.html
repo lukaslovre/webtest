@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <title>To-do list</title>
+  </head>
+  <body>
+    <div class="main">
+      <!-- Header dio (naslov i prognoza) -->
+      <div class="header">
+        <!-- Lijevi dio headera (naslov i datum) -->
+        <div class="headerLeft">
+          <h1>TO-DO</h1>
+          <p id="headerDate">Today, 21. January</p>
+        </div>
+        <!-- Desni dio headera (prognoza) -->
+        <div class="headerRight">
+          <p>Temperatura info!</p>
+        </div>
+      </div>
+
+      <!-- Finished/Unfinished tab -->
+      <div class="finishDiv">
+        <p class="active">Unfinished</p>
+        <p>Finished</p>
+      </div>
+
+      <!-- Taskovi -->
+      <div class="allTasks">
+        <ul class="allTasksUl">
+          <!-- Task 1 test -->
+          <li class="task" id="1">
+            <img
+              class="emptyCircle"
+              src="SVG/empty-circle.svg"
+              alt="emptyCircle"
+            />
+            <img
+              class="tickedCircle"
+              src="SVG/ticked-circle.svg"
+              alt="tickedCircle"
+              onclick="completeTask(this)"
+            />
+            <div class="textPartofTask">
+              <p class="taskText">
+                Idem na žurku da operem patku sa šamponom. I onda cu tako da se
+                na jedem nije vise relano kolko sam gladan isuse kralju. Imas 5
+                bani za posudit? AJ ak imas daj mi pa da vidmo sta da kupim
+                mozda si kupim koju zvaku
+              </p>
+              <p class="taskDate">Tuesday</p>
+            </div>
+            <img src="SVG/options-circle.svg" alt="optionsCircle" />
+          </li>
+        </ul>
+      </div>
+      <div class="footer">
+        <button onclick="footerVisibilitySwitch()">New task</button>
+        <div class="footerInputDiv footerActive">
+          <input
+            type="text"
+            name="taskInput"
+            id="taskInput"
+            spellcheck="false"
+          />
+          <button class="addTaskBtn" onclick="addNewTask()">Add</button>
+        </div>
+      </div>
+    </div>
+  </body>
+  <script src="script.js"></script>
+</html>

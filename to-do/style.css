@@ -1,0 +1,178 @@
+/* *Općeniti style-ovi*/
+* {
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
+  font-family: "Montserrat", sans-serif;
+}
+body {
+  background: linear-gradient(107.56deg, #20e2d7 0%, #f9fea5 100%);
+  height: 100vh;
+}
+h1 {
+  font-size: 72px;
+  font-weight: 700;
+}
+p {
+  font-size: 24px;
+  font-weight: 600;
+  color: #404040;
+}
+/* *Main white box*/
+.main {
+  width: 1080px;
+  height: 90vh;
+  margin: auto;
+  padding: 44px;
+  top: 5vh;
+  background-color: #fcf7f8;
+  position: relative;
+  background: #fcf7f8;
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
+  border-radius: 32px;
+}
+
+/* *header*/
+.header {
+  width: 95%;
+  margin: auto;
+  margin-bottom: 80px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.headerLeft {
+  text-align: center;
+}
+.headerLeft p {
+  font-weight: 500;
+  color: #404040;
+}
+
+/* *Finished/Unfinished task bar*/
+.finishDiv {
+  width: 75%;
+  margin: auto;
+  margin-bottom: 25px;
+  display: flex;
+  justify-content: space-between;
+  cursor: pointer;
+}
+.finishDiv p {
+  color: #797979;
+}
+.finishDiv .active {
+  color: black;
+  font-weight: 700;
+}
+
+/* *Task part; all tasks div*/
+.allTasks {
+}
+/* TODO: makne scrollbar ali ostavlja mogucnost scrollanja
+    .allTasks::-webkit-scrollbar {
+    display: none;
+    }
+*/
+.task {
+  margin-bottom: 16px;
+  width: 100%;
+  height: 90px;
+  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.25);
+  border-radius: 32px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  transition: transform 200ms ease 600ms, opacity 200ms ease 600ms;
+}
+.doneTask {
+  display: none;
+}
+.task img {
+  margin: 0 30px;
+  cursor: pointer;
+}
+.emptyCircle {
+  transition: opacity 300ms linear;
+}
+.tickedCircle {
+  position: absolute;
+  opacity: 0;
+  transition: opacity 300ms linear;
+}
+
+.textPartofTask {
+  height: 85%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.taskText {
+  overflow-y: scroll;
+  font-size: 20px;
+  line-height: 1.4;
+}
+.taskDate {
+  width: fit-content;
+  padding: 2px 8px;
+  font-size: 12px;
+  border-radius: 100px;
+  font-weight: 700;
+  color: #fcf7f8;
+  background-color: #695cff;
+}
+
+/* *footer*/
+.footer {
+  width: 100%;
+  position: absolute;
+  bottom: 25px;
+  left: 0px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.footer button {
+  width: 256px;
+  height: 80px;
+  font-size: 32px;
+  font-weight: 700;
+  color: #222222;
+  background: linear-gradient(97.05deg, #ebc0fd 0%, #d8fdff 100%);
+  border: 1px solid #cccccc;
+  box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.25);
+  border-radius: 64px;
+  outline: none;
+  cursor: pointer;
+  transition: border 75ms;
+}
+.footer button:hover {
+  border: 2px solid #222222;
+}
+
+#taskInput {
+  height: 80px;
+  width: 725px;
+  padding: 0 50px;
+
+  font-size: 24px;
+  font-weight: 700;
+  color: #303030;
+
+  background-color: #ffffff;
+  border: 1px solid #cccccc;
+  box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.25);
+  border-radius: 64px;
+  outline: none;
+}
+.footer .addTaskBtn {
+  width: 150px;
+  margin-left: 36px;
+}
+.footerActive {
+  display: none;
+}
