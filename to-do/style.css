@@ -8,6 +8,7 @@
 body {
   background: linear-gradient(107.56deg, #20e2d7 0%, #f9fea5 100%);
   height: 100vh;
+  overflow: hidden;
 }
 h1 {
   font-size: 72px;
@@ -20,10 +21,14 @@ p {
 }
 /* *Main white box*/
 .main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
   width: 1080px;
   height: 90vh;
   margin: auto;
-  padding: 44px;
+  padding: 32px 44px 24px 44px;
   top: 5vh;
   background-color: #fcf7f8;
   position: relative;
@@ -35,7 +40,6 @@ p {
 /* *header*/
 .header {
   width: 95%;
-  margin: auto;
   margin-bottom: 80px;
   display: flex;
   justify-content: space-between;
@@ -52,14 +56,13 @@ p {
 /* *Finished/Unfinished task bar*/
 .finishDiv {
   width: 75%;
-  margin: auto;
   margin-bottom: 25px;
   display: flex;
   justify-content: space-between;
-  cursor: pointer;
 }
 .finishDiv p {
   color: #797979;
+  cursor: pointer;
 }
 .finishDiv .active {
   color: black;
@@ -68,12 +71,17 @@ p {
 
 /* *Task part; all tasks div*/
 .allTasks {
+  height: 100%;
+  width: 100%;
+  padding: 5px;
+  overflow-y: scroll;
+  overflow-x: hidden;
 }
-/* TODO: makne scrollbar ali ostavlja mogucnost scrollanja
-    .allTasks::-webkit-scrollbar {
-    display: none;
-    }
-*/
+
+.allTasks::-webkit-scrollbar {
+  display: none;
+}
+
 .task {
   margin-bottom: 16px;
   width: 100%;
@@ -83,11 +91,54 @@ p {
 
   display: flex;
   align-items: center;
-  justify-content: space-between;
 
-  transition: transform 200ms ease 600ms, opacity 200ms ease 600ms;
+  /*transition: transform 200ms ease 600ms, opacity 200ms ease 600ms, height 500ms;*/
 }
-.doneTask {
+
+@keyframes RightToLeftFadeOut {
+  from {
+    opacity: 1;
+    transform: translateX(0px);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(-100px);
+  }
+}
+@keyframes RightToLeftFadeIn {
+  from {
+    opacity: 0;
+    transform: translateX(100px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0px);
+  }
+}
+@keyframes LeftToRightFadeOut {
+  from {
+    opacity: 1;
+    transform: translateX(0px);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(100px);
+  }
+}
+
+@keyframes LeftToRightFadeIn {
+  from {
+    opacity: 0;
+    transform: translateX(-100px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0px);
+  }
+}
+
+/* klasa koja se da tasku kad se stisne DONE*/
+.hiddenTask {
   display: none;
 }
 .task img {
@@ -100,6 +151,7 @@ p {
 .tickedCircle {
   position: absolute;
   opacity: 0;
+  z-index: -1;
   transition: opacity 300ms linear;
 }
 
@@ -111,7 +163,7 @@ p {
   justify-content: center;
 }
 .taskText {
-  overflow-y: scroll;
+  overflow-y: hidden;
   font-size: 20px;
   line-height: 1.4;
 }
@@ -128,9 +180,8 @@ p {
 /* *footer*/
 .footer {
   width: 100%;
-  position: absolute;
-  bottom: 25px;
-  left: 0px;
+
+  margin-top: 24px;
 
   display: flex;
   align-items: center;
