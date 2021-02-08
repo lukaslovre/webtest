@@ -70,13 +70,16 @@ function addNewTask() {
 
 
 */
-
+let isLocked = 0;
 //* Funkcija za označavanje taska kao obavljenog ili vraćanje na neobavljeni:
 function completeTask(emptyCircle) {
+  if (isLocked) {
+    return;
+  }
   let task = emptyCircle.parentNode;
   let tickedCircle = task.querySelector(".tickedCircle");
   let taskText = task.querySelector(".taskText");
-
+  isLocked = 1;
   //animacije:
   if (task.classList.contains("unfinished")) {
     //ako je unfinished->finished
@@ -96,6 +99,7 @@ function completeTask(emptyCircle) {
 
   setTimeout(() => {
     setVisibilityOfTask();
+    isLocked = 0;
   }, 700);
 }
 
@@ -129,8 +133,6 @@ function setVisibilityOfTask() {
 function switchTab(tab) {
   const finishTabs = document.querySelectorAll(".finishDiv p");
   const allTasks = document.querySelector(".allTasksUl");
-  let tasks = allTasks.children;
-  let shownTasks = [];
 
   //provjerava koji gumb je stisnut (dali je stisnut vec aktivan) i postavlja odgovoran tab u .active
   if (tab.classList.contains("active")) {
@@ -176,6 +178,37 @@ function animateTabSwitch(activeTab) {
     }
   }
 }
+
+//* funkcija expanda more-options gumb:
+function expandRightButton(optionsBtn) {
+  let rightButtonsDiv = optionsBtn.parentNode;
+  let allHidenBtns = rightButtonsDiv.querySelectorAll(".right-hidden-button");
+  let thrashBtn = rightButtonsDiv.querySelector(".thrashCircle");
+  let editBtn = rightButtonsDiv.querySelector(".editCircle");
+  let dateBtn = rightButtonsDiv.querySelector(".dateCircle");
+
+  //ako gumbi nisu expandani
+  if (thrashBtn.style.zIndex != 1) {
+    allHidenBtns.forEach((element) => {
+      element.style.zIndex = "1";
+      element.style.opacity = "1";
+    });
+    thrashBtn.style.transform = "translateX(-32px) translateY(-30px)";
+    editBtn.style.transform = "translateX(-64px)";
+    dateBtn.style.transform = "translateX(-32px) translateY(30px)";
+  }
+  //ako su gumbi vec expandani onda ih smanji
+  else {
+    allHidenBtns.forEach((element) => {
+      element.style.opacity = "0";
+      element.style.transform = "translate(0)";
+      setTimeout(() => {
+        element.style.zIndex = "-1";
+      }, 200);
+    });
+  }
+}
+
 /*
 
 ovo je nesto probno za prosirenje visine taska

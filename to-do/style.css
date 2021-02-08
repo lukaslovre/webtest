@@ -91,59 +91,12 @@ p {
 
   display: flex;
   align-items: center;
-
-  /*transition: transform 200ms ease 600ms, opacity 200ms ease 600ms, height 500ms;*/
 }
 
-@keyframes RightToLeftFadeOut {
-  from {
-    opacity: 1;
-    transform: translateX(0px);
-  }
-  to {
-    opacity: 0;
-    transform: translateX(-100px);
-  }
-}
-@keyframes RightToLeftFadeIn {
-  from {
-    opacity: 0;
-    transform: translateX(100px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0px);
-  }
-}
-@keyframes LeftToRightFadeOut {
-  from {
-    opacity: 1;
-    transform: translateX(0px);
-  }
-  to {
-    opacity: 0;
-    transform: translateX(100px);
-  }
-}
-
-@keyframes LeftToRightFadeIn {
-  from {
-    opacity: 0;
-    transform: translateX(-100px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0px);
-  }
-}
-
-/* klasa koja se da tasku kad se stisne DONE*/
-.hiddenTask {
-  display: none;
-}
 .task img {
   margin: 0 30px;
   cursor: pointer;
+  width: 36px;
 }
 .emptyCircle {
   transition: opacity 300ms linear;
@@ -175,6 +128,25 @@ p {
   font-weight: 700;
   color: #fcf7f8;
   background-color: #695cff;
+}
+
+/* desni gumbi*/
+.right-task-buttons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 150px;
+  position: relative;
+}
+.right-task-buttons img {
+  margin: 0px;
+}
+.right-hidden-button {
+  position: absolute;
+
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 200ms ease-out, transform 200ms ease-out;
 }
 
 /* *footer*/
@@ -226,4 +198,47 @@ p {
 }
 .footerActive {
   display: none;
+}
+
+/* animacije: */
+@keyframes RightToLeftFadeOut {
+  from {
+    opacity: 1;
+    transform: translateX(0px);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(-100px);
+  }
+}
+@keyframes RightToLeftFadeIn {
+  from {
+    opacity: 0;
+    transform: translateX(100px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0px);
+  }
+}
+@keyframes LeftToRightFadeOut {
+  from {
+    opacity: 1;
+    transform: translateX(0px);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(100px);
+  }
+}
+
+@keyframes LeftToRightFadeIn {
+  from {
+    opacity: 0;
+    transform: translateX(-100px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0px);
+  }
 }

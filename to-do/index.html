@@ -49,7 +49,6 @@
               class="tickedCircle"
               src="SVG/ticked-circle.svg"
               alt="tickedCircle"
-              onclick="completeTask(this)"
             />
             <div class="textPartofTask">
               <p class="taskText">
@@ -60,7 +59,26 @@
               </p>
               <p class="taskDate">Tuesday</p>
             </div>
-            <img src="SVG/options-circle.svg" alt="optionsCircle" />
+            <div class="right-task-buttons">
+              <img
+                src="SVG/edit-circle.svg"
+                class="right-hidden-button editCircle"
+              />
+              <img
+                src="SVG/thrash-circle.svg"
+                class="right-hidden-button thrashCircle"
+              />
+              <img
+                src="SVG/date-circle.svg"
+                class="right-hidden-button dateCircle"
+              />
+              <img
+                src="SVG/options-circle.svg"
+                alt="optionsCircle"
+                class="optionsCircle"
+                onclick="expandRightButton(this)"
+              />
+            </div>
           </li>
         </ul>
       </div>
