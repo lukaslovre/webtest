@@ -193,9 +193,10 @@ function expandRightButton(optionsBtn) {
       element.style.zIndex = "1";
       element.style.opacity = "1";
     });
-    thrashBtn.style.transform = "translateX(-32px) translateY(-30px)";
-    editBtn.style.transform = "translateX(-64px)";
-    dateBtn.style.transform = "translateX(-32px) translateY(30px)";
+    optionsBtn.style.transform = "translateX(32px)";
+    thrashBtn.style.transform = "translateY(-28px)";
+    editBtn.style.transform = "translateX(-32px)";
+    dateBtn.style.transform = " translateY(28px)";
   }
   //ako su gumbi vec expandani onda ih smanji
   else {
@@ -206,7 +207,19 @@ function expandRightButton(optionsBtn) {
         element.style.zIndex = "-1";
       }, 200);
     });
+    optionsBtn.style.transform = "translateX(0px)";
   }
+}
+
+//* funkcija briše task (delete task gumb):
+function deleteTask(deleteBtn) {
+  let task = deleteBtn.parentNode.parentNode;
+  task.style.animation = "500ms deleteTask ease-in";
+  setTimeout(() => {
+    task.remove();
+  }, 500);
+
+  console.log(task);
 }
 
 /*
