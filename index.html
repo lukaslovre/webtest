@@ -3,96 +3,40 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="style.css" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+
     <link
-      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700&display=swap"
+      href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700&display=swap"
       rel="stylesheet"
     />
-    <title>To-do list</title>
+    <link rel="stylesheet" href="style.css" />
+
+    <title>Lukas WEBSAJT</title>
   </head>
   <body>
-    <div class="main">
-      <!-- Header dio (naslov i prognoza) -->
-      <div class="header">
-        <!-- Lijevi dio headera (naslov i datum) -->
-        <div class="headerLeft">
-          <h1>TO-DO</h1>
-          <p id="headerDate">Today, 21. January</p>
-        </div>
-        <!-- Desni dio headera (prognoza) -->
-        <div class="headerRight">
-          <p>Temperatura info!</p>
-        </div>
-      </div>
+    <header>
+      <h1>Lukas Lovretić</h1>
+      <ul id="headmenu">
+        <a href="index.html"><li>home</li></a>
+        <a href="uurm.html"><li>uurm</li></a>
+        <a href="web.html"><li>web-dizajn</li></a>
+      </ul>
+    </header>
+    <div class="p1">
+      <p>
+        Na ovoj stranici objavljujem zadatke za školu i <br />
+        svoje osobne projekte.
+      </p>
+      <div class="todo-promo">
+        <h1>TODO LISTA AJMOOO!!!!</h1>
 
-      <!-- Finished/Unfinished tab -->
-      <div class="finishDiv">
-        <p class="active" id="unfinishedTab" onclick="switchTab(this)">
-          Unfinished
-        </p>
-        <p id="finishedTab" class="" onclick="switchTab(this)">Finished</p>
-      </div>
-
-      <!-- Taskovi -->
-      <div class="allTasks">
-        <ul class="allTasksUl">
-          <!-- Task 1 test -->
-          <li class="task unfinished" id="0">
-            <img
-              class="emptyCircle"
-              src="SVG/empty-circle.svg"
-              alt="emptyCircle"
-              onclick="completeTask(this)"
-            />
-            <img
-              class="tickedCircle"
-              src="SVG/ticked-circle.svg"
-              alt="tickedCircle"
-            />
-            <div class="textPartofTask">
-              <p class="taskText">Ovo je task za primjer, tekst ovog</p>
-              <p class="taskDate">Tuesday</p>
-            </div>
-            <div class="right-task-buttons">
-              <img
-                src="SVG/edit-circle.svg"
-                class="right-hidden-button editCircle"
-                onclick="footerVisibilitySwitch('edit',this)"
-              />
-              <img
-                src="SVG/thrash-circle.svg"
-                class="right-hidden-button thrashCircle"
-                onclick="deleteTask(this)"
-              />
-              <img
-                src="SVG/date-circle.svg"
-                class="right-hidden-button dateCircle"
-              />
-              <img
-                src="SVG/options-circle.svg"
-                alt="optionsCircle"
-                class="optionsCircle"
-                onclick="expandRightButton(this)"
-              />
-            </div>
-          </li>
-        </ul>
-      </div>
-      <div class="footer">
-        <button onclick="footerVisibilitySwitch('add')">New task</button>
-        <div class="footerInputDiv footerActive">
-          <input
-            type="text"
-            name="taskInput"
-            id="taskInput"
-            spellcheck="false"
-          />
-          <button class="addTaskBtn" onclick="addNewTask()">Add</button>
-          <button class="editTaskBtn" onclick="submitEditTask()">Edit</button>
-        </div>
+        <button
+          class="bigButton"
+          href="https://www.lukaslovretic.from.hr/to-do/"
+        >
+          <a href="/to-do/"> TO-DO</a>
+        </button>
       </div>
     </div>
   </body>
-  <script src="script.js"></script>
 </html>
