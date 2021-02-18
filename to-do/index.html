@@ -51,16 +51,14 @@
               alt="tickedCircle"
             />
             <div class="textPartofTask">
-              <p class="taskText">
-                Ovo je task za primjer, tekst ovog taska ide preko preko dva
-                reda a a a aa a aa aaaaaaaaa aaaaaaaaa aaaaa
-              </p>
+              <p class="taskText">Ovo je task za primjer, tekst ovog</p>
               <p class="taskDate">Tuesday</p>
             </div>
             <div class="right-task-buttons">
               <img
                 src="SVG/edit-circle.svg"
                 class="right-hidden-button editCircle"
+                onclick="footerVisibilitySwitch('edit',this)"
               />
               <img
                 src="SVG/thrash-circle.svg"
@@ -82,7 +80,7 @@
         </ul>
       </div>
       <div class="footer">
-        <button onclick="footerVisibilitySwitch()">New task</button>
+        <button onclick="footerVisibilitySwitch('add')">New task</button>
         <div class="footerInputDiv footerActive">
           <input
             type="text"
@@ -91,6 +89,7 @@
             spellcheck="false"
           />
           <button class="addTaskBtn" onclick="addNewTask()">Add</button>
+          <button class="editTaskBtn" onclick="submitEditTask()">Edit</button>
         </div>
       </div>
     </div>

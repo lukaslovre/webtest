@@ -85,7 +85,7 @@ p {
 .task {
   margin-bottom: 16px;
   width: 100%;
-  height: 90px;
+  height: 100px;
   box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.25);
   border-radius: 32px;
 
@@ -122,9 +122,10 @@ p {
 }
 .taskDate {
   width: fit-content;
+
   padding: 2px 8px;
   font-size: 12px;
-  border-radius: 100px;
+  border-radius: 32px;
   font-weight: 700;
   color: #fcf7f8;
   background-color: #695cff;
@@ -191,7 +192,8 @@ p {
   border-radius: 64px;
   outline: none;
 }
-.footer .addTaskBtn {
+.footer .addTaskBtn,
+.footer .editTaskBtn {
   width: 150px;
   margin-left: 36px;
 }
@@ -203,9 +205,11 @@ p {
 @keyframes deleteTask {
   from {
     opacity: 1;
+    transform: scale(1);
   }
   to {
     opacity: 0;
+    transform: scale(0.85);
   }
 }
 

@@ -20,9 +20,28 @@ addEventListener("DOMContentLoaded", () => {
 });
 
 //* Mijenja vidljivost footer elemenata i fokusira input
-function footerVisibilitySwitch() {
+function footerVisibilitySwitch(addOrEdit, editCircle) {
   const footer = document.querySelector(".footer");
   const inputBox = document.querySelector("#taskInput");
+
+  //provjerava se dali se dodaje novi task ili edita stari:
+  //ako se dodaje novi task:
+  if (addOrEdit == "add") {
+    document.querySelector(".editTaskBtn").style.display = "none";
+    document.querySelector(".addTaskBtn").style.display = "initial";
+  }
+  //ako se edita stari task:
+  else if (addOrEdit == "edit") {
+    let task = editCircle.parentNode.parentNode;
+    let taskContent = task.querySelector(".taskText").innerHTML;
+    currentlyEditedTask = task;
+
+    document.querySelector(".addTaskBtn").style.display = "none";
+    document.querySelector(".editTaskBtn").style.display = "initial";
+    inputBox.value = taskContent;
+
+    expandRightButton(task.querySelector(".optionsCircle"));
+  }
 
   //Toggle-a klasu aktive (display:none) za footer
   for (let i = 0; i < footer.children.length; i++) {
@@ -45,16 +64,24 @@ function addNewTask() {
   let textNode = document.createTextNode("");
   newLi.appendChild(textNode);
   newLi.classList.add("task", "unfinished");
-  newLi.innerHTML =
+  /* newLi.innerHTML =
     '<img class="emptyCircle" src="SVG/empty-circle.svg" alt="emptyCircle" onclick="completeTask(this)" /><img class="tickedCircle" src="SVG/ticked-circle.svg" alt="tickedCircle" /><div class="textPartofTask"><p class="taskText">' +
     textInput.value +
     '</p></div><img src="SVG/options-circle.svg" alt="optionsCircle"/>';
+    */
+  //dole je novo
+  newLi.innerHTML =
+    '<img class="emptyCircle" src="SVG/empty-circle.svg" onclick="completeTask(this)"/><img class="tickedCircle" src="SVG/ticked-circle.svg"/><div class="textPartofTask"><p class="taskText">' +
+    textInput.value +
+    '</p></div><div class="right-task-buttons"><img src="SVG/edit-circle.svg" class="right-hidden-button editCircle" onclick="footerVisibilitySwitch(\'edit\',this)"/><img src="SVG/thrash-circle.svg" class="right-hidden-button thrashCircle" onclick="deleteTask(this)"/><img src="SVG/date-circle.svg" class="right-hidden-button dateCircle"/><img src="SVG/options-circle.svg" class="optionsCircle" onclick="expandRightButton(this)"/></div>';
+
   // TODO: Doda id sa counterom, dodati kad napravim counter:
   // newLi.setAttribute("id",counter)
   document.querySelector(".allTasksUl").appendChild(newLi);
 
   //skrivanje footera i clear-anje input forme
   textInput.value = "";
+
   footerVisibilitySwitch();
 }
 
@@ -214,12 +241,25 @@ function expandRightButton(optionsBtn) {
 //* funkcija briše task (delete task gumb):
 function deleteTask(deleteBtn) {
   let task = deleteBtn.parentNode.parentNode;
-  task.style.animation = "500ms deleteTask ease-in";
+  task.style.animation = "250ms deleteTask 50ms ease-in forwards";
   setTimeout(() => {
     task.remove();
   }, 500);
+}
 
-  console.log(task);
+//* funkcija koja se aktivira kada se stisne Edit gumb na footeru:
+let currentlyEditedTask; //globalna varijabla kako bi se mogao editati task (da mozemo promjeniti na odredenom tasku text)
+function submitEditTask() {
+  let textInput = document.querySelector("#taskInput");
+
+  if (textInput.value == "") {
+    return;
+  }
+
+  currentlyEditedTask.querySelector(".taskText").innerHTML = textInput.value;
+
+  textInput.value = "";
+  footerVisibilitySwitch();
 }
 
 /*
