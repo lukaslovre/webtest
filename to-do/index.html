@@ -36,6 +36,62 @@
 
       <!-- Taskovi -->
       <div class="allTasks">
+        <div class="calendar">
+          <div class="calendar-header">
+            <img src="svg/Arrow - Left Circle.svg" class="leftArrow" />
+            <div class="calendar-MonthYear"></div>
+            <img src="svg/Arrow - Right Circle.svg" class="rightArrow" />
+          </div>
+          <div class="calendar-weekday">Monday</div>
+          <div class="calendar-weekday">Tuesday</div>
+          <div class="calendar-weekday">Wednesday</div>
+          <div class="calendar-weekday">Thursday</div>
+          <div class="calendar-weekday">Friday</div>
+          <div class="calendar-weekday">Saturday</div>
+          <div class="calendar-weekday">Sunday</div>
+          <div class="calendar-days" id="day-1"></div>
+          <div class="calendar-days" id="day-2"></div>
+          <div class="calendar-days" id="day-3"></div>
+          <div class="calendar-days" id="day-4"></div>
+          <div class="calendar-days" id="day-5"></div>
+          <div class="calendar-days" id="day-6"></div>
+          <div class="calendar-days" id="day-7"></div>
+          <div class="calendar-days" id="day-8"></div>
+          <div class="calendar-days" id="day-9"></div>
+          <div class="calendar-days" id="day-10"></div>
+          <div class="calendar-days" id="day-11"></div>
+          <div class="calendar-days" id="day-12"></div>
+          <div class="calendar-days" id="day-13"></div>
+          <div class="calendar-days" id="day-14"></div>
+          <div class="calendar-days" id="day-15"></div>
+          <div class="calendar-days" id="day-16"></div>
+          <div class="calendar-days" id="day-17"></div>
+          <div class="calendar-days" id="day-18"></div>
+          <div class="calendar-days" id="day-19"></div>
+          <div class="calendar-days" id="day-20"></div>
+          <div class="calendar-days" id="day-21"></div>
+          <div class="calendar-days" id="day-22"></div>
+          <div class="calendar-days" id="day-23"></div>
+          <div class="calendar-days" id="day-24"></div>
+          <div class="calendar-days" id="day-25"></div>
+          <div class="calendar-days" id="day-26"></div>
+          <div class="calendar-days" id="day-27"></div>
+          <div class="calendar-days" id="day-28"></div>
+          <div class="calendar-days" id="day-29"></div>
+          <div class="calendar-days" id="day-30"></div>
+          <div class="calendar-days" id="day-31"></div>
+          <div class="calendar-days" id="day-32"></div>
+          <div class="calendar-days" id="day-33"></div>
+          <div class="calendar-days" id="day-34"></div>
+          <div class="calendar-days" id="day-35"></div>
+          <div class="calendar-days" id="day-36"></div>
+          <div class="calendar-days" id="day-37"></div>
+          <div class="calendar-days" id="day-38"></div>
+          <div class="calendar-days" id="day-39"></div>
+          <div class="calendar-days" id="day-40"></div>
+          <div class="calendar-days" id="day-41"></div>
+          <div class="calendar-days" id="day-42"></div>
+        </div>
         <ul class="allTasksUl">
           <!-- Task 1 test -->
           <li class="task unfinished" id="0">
@@ -52,7 +108,7 @@
             />
             <div class="textPartofTask">
               <p class="taskText">Ovo je task za primjer, tekst ovog</p>
-              <p class="taskDate">Tuesday</p>
+              <p class="taskDate"></p>
             </div>
             <div class="right-task-buttons">
               <img
@@ -68,6 +124,7 @@
               <img
                 src="SVG/date-circle.svg"
                 class="right-hidden-button dateCircle"
+                onclick="showCalendar(this)"
               />
               <img
                 src="SVG/options-circle.svg"
@@ -80,17 +137,25 @@
         </ul>
       </div>
       <div class="footer">
-        <button onclick="footerVisibilitySwitch('add')">New task</button>
-        <div class="footerInputDiv footerActive">
+        <button class="newTaskBtn" onclick="footerVisibilitySwitch('add')">
+          New task
+        </button>
+        <div class="footerInputDiv">
           <input
             type="text"
             name="taskInput"
             id="taskInput"
+            class="hidden"
             spellcheck="false"
           />
-          <button class="addTaskBtn" onclick="addNewTask()">Add</button>
-          <button class="editTaskBtn" onclick="submitEditTask()">Edit</button>
+          <button class="addTaskBtn hidden" onclick="addNewTask()">Add</button>
+          <button class="editTaskBtn hidden" onclick="submitEditTask()">
+            Edit
+          </button>
         </div>
+        <button class="cancelDateBtn hidden" onclick="hideCalendar()">
+          Cancel
+        </button>
       </div>
     </div>
   </body>

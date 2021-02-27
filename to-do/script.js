@@ -1,5 +1,5 @@
 //* refresh page every day (at 00:00)
-addEventListener("DOMContentLoaded", () => {
+/*addEventListener("DOMContentLoaded", () => {
   let date = new Date();
   date = date.getHours() * 3600 + date.getMinutes() * 60 + date.getSeconds();
   let remainingTime = 86400 - date;
@@ -8,45 +8,80 @@ addEventListener("DOMContentLoaded", () => {
     location.reload();
   }, remainingTime * 1000);
 });
+*/
 
 //* set date in header
-addEventListener("DOMContentLoaded", () => {
+function writeCurrentDate() {
+  //upisivanje u header
   let headerDate = document.querySelector("#headerDate");
   let date = new Date();
   let weekday = date.toLocaleDateString(undefined, { weekday: "long" }); //undefined bi trebalo dati system default
   let day = date.getDate();
   let month = date.toLocaleDateString(undefined, { month: "long" });
   headerDate.innerHTML = weekday + ", " + day + " " + month;
-});
+
+  //zakazanje sljedeceg "refresha"
+  dateInSec =
+    date.getHours() * 3600 + date.getMinutes() * 60 + date.getSeconds();
+  let remainingTime = 86400 - dateInSec; //86400
+  console.log(remainingTime);
+  setTimeout(() => {
+    writeCurrentDate();
+  }, remainingTime * 1000);
+}
+addEventListener("DOMContentLoaded", writeCurrentDate());
 
 //* Mijenja vidljivost footer elemenata i fokusira input
-function footerVisibilitySwitch(addOrEdit, editCircle) {
+function footerVisibilitySwitch(footerSelection, editCircle) {
   const footer = document.querySelector(".footer");
   const inputBox = document.querySelector("#taskInput");
 
   //provjerava se dali se dodaje novi task ili edita stari:
   //ako se dodaje novi task:
-  if (addOrEdit == "add") {
+  if (footerSelection == "add") {
+    inputBox.style.display = "initial";
+    document.querySelector(".newTaskBtn").style.display = "none";
     document.querySelector(".editTaskBtn").style.display = "none";
+    document.querySelector(".cancelDateBtn").style.display = "none";
     document.querySelector(".addTaskBtn").style.display = "initial";
   }
   //ako se edita stari task:
-  else if (addOrEdit == "edit") {
+  else if (footerSelection == "edit") {
     let task = editCircle.parentNode.parentNode;
     let taskContent = task.querySelector(".taskText").innerHTML;
-    currentlyEditedTask = task;
-
-    document.querySelector(".addTaskBtn").style.display = "none";
-    document.querySelector(".editTaskBtn").style.display = "initial";
+    currentlySelectedTask = task;
     inputBox.value = taskContent;
+
+    inputBox.style.display = "initial";
+    document.querySelector(".newTaskBtn").style.display = "none";
+    document.querySelector(".addTaskBtn").style.display = "none";
+    document.querySelector(".cancelDateBtn").style.display = "none";
+    document.querySelector(".editTaskBtn").style.display = "initial";
 
     expandRightButton(task.querySelector(".optionsCircle"));
   }
+  //ako se gasi kalendar
+  else if (footerSelection == "dateCancel") {
+    inputBox.style.display = "none";
+    document.querySelector(".newTaskBtn").style.display = "none";
+    document.querySelector(".addTaskBtn").style.display = "none";
+    document.querySelector(".editTaskBtn").style.display = "none";
+    document.querySelector(".cancelDateBtn").style.display = "initial";
+  }
+  //samo new task btn
+  else if (footerSelection == "default") {
+    inputBox.style.display = "none";
+    document.querySelector(".newTaskBtn").style.display = "initial";
+    document.querySelector(".editTaskBtn").style.display = "none";
+    document.querySelector(".cancelDateBtn").style.display = "none";
+    document.querySelector(".addTaskBtn").style.display = "none";
+  }
 
   //Toggle-a klasu aktive (display:none) za footer
-  for (let i = 0; i < footer.children.length; i++) {
+  /*for (let i = 0; i < footer.children.length; i++) {
     footer.children[i].classList.toggle("footerActive");
   }
+  */
 
   //fokusira se na input
   inputBox.focus();
@@ -73,8 +108,7 @@ function addNewTask() {
   newLi.innerHTML =
     '<img class="emptyCircle" src="SVG/empty-circle.svg" onclick="completeTask(this)"/><img class="tickedCircle" src="SVG/ticked-circle.svg"/><div class="textPartofTask"><p class="taskText">' +
     textInput.value +
-    '</p></div><div class="right-task-buttons"><img src="SVG/edit-circle.svg" class="right-hidden-button editCircle" onclick="footerVisibilitySwitch(\'edit\',this)"/><img src="SVG/thrash-circle.svg" class="right-hidden-button thrashCircle" onclick="deleteTask(this)"/><img src="SVG/date-circle.svg" class="right-hidden-button dateCircle"/><img src="SVG/options-circle.svg" class="optionsCircle" onclick="expandRightButton(this)"/></div>';
-
+    '</p><p class="taskDate"></p></div><div class="right-task-buttons"><img src="SVG/edit-circle.svg" class="right-hidden-button editCircle" onclick="footerVisibilitySwitch(\'edit\',this)"/><img src="SVG/thrash-circle.svg" class="right-hidden-button thrashCircle" onclick="deleteTask(this)"/><img src="SVG/date-circle.svg" class="right-hidden-button dateCircle" onclick="showCalendar(this)"/><img src="SVG/options-circle.svg" class="optionsCircle" onclick="expandRightButton(this)"/></div>';
   // TODO: Doda id sa counterom, dodati kad napravim counter:
   // newLi.setAttribute("id",counter)
   document.querySelector(".allTasksUl").appendChild(newLi);
@@ -82,7 +116,7 @@ function addNewTask() {
   //skrivanje footera i clear-anje input forme
   textInput.value = "";
 
-  footerVisibilitySwitch();
+  footerVisibilitySwitch("default");
 }
 
 /*
@@ -248,7 +282,7 @@ function deleteTask(deleteBtn) {
 }
 
 //* funkcija koja se aktivira kada se stisne Edit gumb na footeru:
-let currentlyEditedTask; //globalna varijabla kako bi se mogao editati task (da mozemo promjeniti na odredenom tasku text)
+let currentlySelectedTask; //globalna varijabla kako bi se mogao editati task (da mozemo promjeniti na odredenom tasku text)
 function submitEditTask() {
   let textInput = document.querySelector("#taskInput");
 
@@ -256,10 +290,143 @@ function submitEditTask() {
     return;
   }
 
-  currentlyEditedTask.querySelector(".taskText").innerHTML = textInput.value;
+  currentlySelectedTask.querySelector(".taskText").innerHTML = textInput.value;
 
   textInput.value = "";
-  footerVisibilitySwitch();
+  footerVisibilitySwitch("default");
+}
+
+/*
+
+            KALENDAR:
+
+
+*/
+
+//* Dio za kalendar:
+
+let monthSelector = 0; //globalna var za pracenje koji datum je odabran
+let yearSelector = 0;
+const monthNames = [
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
+];
+
+function showCalendar(taskCalendarBtn) {
+  let task = taskCalendarBtn.parentNode.parentNode;
+  currentlySelectedTask = task;
+  let optionsBtn = task.querySelector(".optionsCircle");
+  expandRightButton(optionsBtn);
+  document.querySelector(".calendar").style.display = "flex";
+  document.querySelector(".allTasksUl").style.display = "none";
+  footerVisibilitySwitch("dateCancel");
+  generateCalendar(monthSelector, yearSelector);
+}
+function hideCalendar() {
+  document.querySelector(".calendar").style.display = "none";
+  document.querySelector(".allTasksUl").style.display = "initial";
+  monthSelector = 0;
+  yearSelector = 0;
+  footerVisibilitySwitch("default");
+}
+
+function generateCalendar(monthSelector, yearSelector) {
+  let date = new Date(); //danasnji datum
+  let month = date.getMonth() + monthSelector + 1; //racuna mjesec koji se treba prikazivati
+  let monthFullName = monthNames[month - 1];
+  let year = date.getFullYear() + yearSelector; //racuna godinu koja se treba prikazivati
+
+  document.querySelector(".calendar-MonthYear").innerHTML =
+    monthFullName + ", " + year; //upisuje mjesec u calendar-header
+
+  let daysInMonth = getDaysInMonth(year, month); //uzima broj dana u mjesecu
+  let firstDay = getFirstDay(year, month - 1); //uzima kada je prvi dan u mjesecu
+
+  //upisuje dane u polja kalendara
+  let dayCounter = 1;
+  for (let i = 1; i <= 42; i++) {
+    if (i >= firstDay && i <= daysInMonth + firstDay - 1) {
+      document.getElementById(`day-${i}`).innerHTML = dayCounter;
+      document.getElementById(`day-${i}`).style.backgroundColor = "#dfffd6";
+      dayCounter++;
+    } else {
+      document.getElementById(`day-${i}`).innerHTML = "";
+      document.getElementById(`day-${i}`).style.backgroundColor = "#f3ffe1";
+    }
+    if (dayCounter == date.getDate() + 1 && month == date.getMonth() + 1) {
+      document.getElementById(`day-${i}`).style.backgroundColor = "#7dcfb6";
+    }
+  }
+
+  //dio za odabir datuma
+  let taskDateElement = currentlySelectedTask.querySelector(".taskDate");
+  let calendarDays = document.querySelectorAll(".calendar-days");
+  calendarDays.forEach((day) => {
+    day.addEventListener("click", () => {
+      if (day.innerHTML == "") {
+        return;
+      } else {
+        if (year == date.getFullYear()) {
+          taskDateElement.style.display = "initial";
+          taskDateElement.innerHTML = day.innerHTML + ", " + monthFullName;
+        } else {
+          taskDateElement.style.display = "initial";
+          taskDateElement.innerHTML =
+            day.innerHTML + ", " + monthFullName + ", " + year;
+        }
+        hideCalendar();
+      }
+    });
+  });
+}
+
+//
+
+let leftArrow = document.querySelector(".leftArrow");
+let rightArrow = document.querySelector(".rightArrow");
+
+//prijasnji mjesec
+leftArrow.addEventListener("click", () => {
+  let date = new Date();
+  monthSelector--;
+  if (monthSelector + (date.getMonth() + 1) == 0) {
+    monthSelector = 12 - (date.getMonth() + 1);
+    yearSelector--;
+  }
+  generateCalendar(monthSelector, yearSelector);
+});
+
+//sljedeci mjesec
+rightArrow.addEventListener("click", () => {
+  let date = new Date();
+  monthSelector++;
+  if (monthSelector + date.getMonth() + 1 == 13) {
+    monthSelector = 1 - (date.getMonth() + 1);
+    yearSelector++;
+  }
+  generateCalendar(monthSelector, yearSelector);
+});
+
+function getDaysInMonth(year, month) {
+  return new Date(year, month, 0).getDate();
+}
+
+function getFirstDay(year, month) {
+  let firstDay = new Date(year, month, 1).getDay();
+  if (firstDay == 0) {
+    firstDay = 7;
+  }
+  return firstDay;
 }
 
 /*
