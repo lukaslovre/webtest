@@ -1,8 +1,9 @@
+let todayDate;
 //* refresh page every day (at 00:00)
 /*addEventListener("DOMContentLoaded", () => {
-  let date = new Date();
-  date = date.getHours() * 3600 + date.getMinutes() * 60 + date.getSeconds();
-  let remainingTime = 86400 - date;
+  let todayDate = new Date();
+  todayDate = todayDate.getHours() * 3600 + todayDate.getMinutes() * 60 + todayDate.getSeconds();
+  let remainingTime = 86400 - todayDate;
   console.log(remainingTime);
   setTimeout(() => {
     location.reload();
@@ -14,15 +15,17 @@
 function writeCurrentDate() {
   //upisivanje u header
   let headerDate = document.querySelector("#headerDate");
-  let date = new Date();
-  let weekday = date.toLocaleDateString(undefined, { weekday: "long" }); //undefined bi trebalo dati system default
-  let day = date.getDate();
-  let month = date.toLocaleDateString(undefined, { month: "long" });
+  todayDate = new Date();
+  let weekday = todayDate.toLocaleDateString(undefined, { weekday: "long" }); //undefined bi trebalo dati system default
+  let day = todayDate.getDate();
+  let month = todayDate.toLocaleDateString(undefined, { month: "long" });
   headerDate.innerHTML = weekday + ", " + day + " " + month;
 
   //zakazanje sljedeceg "refresha"
-  dateInSec =
-    date.getHours() * 3600 + date.getMinutes() * 60 + date.getSeconds();
+  let dateInSec =
+    todayDate.getHours() * 3600 +
+    todayDate.getMinutes() * 60 +
+    todayDate.getSeconds();
   let remainingTime = 86400 - dateInSec; //86400
   console.log(remainingTime);
   setTimeout(() => {
@@ -330,7 +333,7 @@ function showCalendar(taskCalendarBtn) {
   document.querySelector(".calendar").style.display = "flex";
   document.querySelector(".allTasksUl").style.display = "none";
   footerVisibilitySwitch("dateCancel");
-  generateCalendar(monthSelector, yearSelector);
+  generateCalendar();
 }
 function hideCalendar() {
   document.querySelector(".calendar").style.display = "none";
@@ -340,11 +343,10 @@ function hideCalendar() {
   footerVisibilitySwitch("default");
 }
 
-function generateCalendar(monthSelector, yearSelector) {
-  let date = new Date(); //danasnji datum
-  let month = date.getMonth() + monthSelector + 1; //racuna mjesec koji se treba prikazivati
+function generateCalendar() {
+  let month = todayDate.getMonth() + monthSelector + 1; //racuna mjesec koji se treba prikazivati
   let monthFullName = monthNames[month - 1];
-  let year = date.getFullYear() + yearSelector; //racuna godinu koja se treba prikazivati
+  let year = todayDate.getFullYear() + yearSelector; //racuna godinu koja se treba prikazivati
 
   document.querySelector(".calendar-MonthYear").innerHTML =
     monthFullName + ", " + year; //upisuje mjesec u calendar-header
@@ -363,58 +365,100 @@ function generateCalendar(monthSelector, yearSelector) {
       document.getElementById(`day-${i}`).innerHTML = "";
       document.getElementById(`day-${i}`).style.backgroundColor = "#f3ffe1";
     }
-    if (dayCounter == date.getDate() + 1 && month == date.getMonth() + 1) {
+    if (i == todayDate.getDate() && month == todayDate.getMonth() + 1) {
       document.getElementById(`day-${i}`).style.backgroundColor = "#7dcfb6";
     }
   }
-
-  //dio za odabir datuma
-  let taskDateElement = currentlySelectedTask.querySelector(".taskDate");
-  let calendarDays = document.querySelectorAll(".calendar-days");
-  calendarDays.forEach((day) => {
-    day.addEventListener("click", () => {
-      if (day.innerHTML == "") {
-        return;
-      } else {
-        if (year == date.getFullYear()) {
-          taskDateElement.style.display = "initial";
-          taskDateElement.innerHTML = day.innerHTML + ", " + monthFullName;
-        } else {
-          taskDateElement.style.display = "initial";
-          taskDateElement.innerHTML =
-            day.innerHTML + ", " + monthFullName + ", " + year;
-        }
-        hideCalendar();
-      }
-    });
-  });
 }
 
 //
+
+//dio za odabir datuma
+let calendarDays = document.querySelectorAll(".calendar-days");
+calendarDays.forEach((day) => {
+  //na svaki dan dodaje eventlistener
+  day.addEventListener("click", () => {
+    let taskDateElement = currentlySelectedTask.querySelector(".taskDate");
+    let month = todayDate.getMonth() + monthSelector;
+    let monthFullName = monthNames[month];
+    let year = todayDate.getFullYear() + yearSelector;
+    let odabraniDatum = new Date(year, month, day.innerHTML);
+    let odabraniDatumSutra = new Date(year, month, parseInt(day.innerHTML) - 1);
+    let odabraniDatumJučer = new Date(year, month, parseInt(day.innerHTML) + 1);
+
+    //provjera dali polje sadrži datum
+    if (day.innerHTML == "") {
+      return;
+    } else {
+      //provjera dali je odabrani datum u trenutnoj godini
+      if (year == todayDate.getFullYear()) {
+        taskDateElement.style.display = "initial";
+        //provjera dali je odabrani dan danas:
+        if (
+          odabraniDatum.getDate() == todayDate.getDate() &&
+          odabraniDatum.getMonth() == odabraniDatum.getMonth()
+        ) {
+          taskDateElement.innerHTML = "Today";
+        }
+        //provjera dali je odabrani dan sutra:
+        else if (
+          odabraniDatumSutra.getDate() == todayDate.getDate() &&
+          odabraniDatumSutra.getMonth() == todayDate.getMonth()
+        ) {
+          taskDateElement.innerHTML = "Tomorrow";
+        }
+        //provjera dali je odabrani dan jučer:
+        else if (
+          odabraniDatumJučer.getDate() == todayDate.getDate() &&
+          odabraniDatumJučer.getMonth() == todayDate.getMonth()
+        ) {
+          taskDateElement.innerHTML = "Yesterday";
+        }
+        //ako nije onda ispisati cijeli datum
+        else {
+          taskDateElement.innerHTML = day.innerHTML + ", " + monthFullName;
+        }
+      }
+      //ako nije u trenutnoj godini:
+      else {
+        taskDateElement.style.display = "initial";
+        taskDateElement.innerHTML =
+          day.innerHTML + ", " + monthFullName + ", " + year;
+      }
+
+      //provjera dali je odabrani datum prošao:
+      if (odabraniDatumJučer > todayDate) {
+        taskDateElement.style.backgroundColor = "#695cff";
+      } else {
+        taskDateElement.style.backgroundColor = "#FF5C5C";
+      }
+
+      hideCalendar();
+    }
+  });
+});
 
 let leftArrow = document.querySelector(".leftArrow");
 let rightArrow = document.querySelector(".rightArrow");
 
 //prijasnji mjesec
 leftArrow.addEventListener("click", () => {
-  let date = new Date();
   monthSelector--;
-  if (monthSelector + (date.getMonth() + 1) == 0) {
-    monthSelector = 12 - (date.getMonth() + 1);
+  if (monthSelector + (todayDate.getMonth() + 1) == 0) {
+    monthSelector = 12 - (todayDate.getMonth() + 1);
     yearSelector--;
   }
-  generateCalendar(monthSelector, yearSelector);
+  generateCalendar();
 });
 
 //sljedeci mjesec
 rightArrow.addEventListener("click", () => {
-  let date = new Date();
   monthSelector++;
-  if (monthSelector + date.getMonth() + 1 == 13) {
-    monthSelector = 1 - (date.getMonth() + 1);
+  if (monthSelector + todayDate.getMonth() + 1 == 13) {
+    monthSelector = 1 - (todayDate.getMonth() + 1);
     yearSelector++;
   }
-  generateCalendar(monthSelector, yearSelector);
+  generateCalendar();
 });
 
 function getDaysInMonth(year, month) {
