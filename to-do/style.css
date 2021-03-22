@@ -53,6 +53,35 @@ p {
   color: #404040;
 }
 
+.headerRight {
+  display: flex;
+  align-items: flex-end;
+}
+.weatherLeftSide {
+  padding-right: 1rem;
+  border-right: 2px solid #d8d8d8;
+}
+#weatherIcon {
+  filter: drop-shadow(2px 2px 1px rgba(0, 0, 0, 0.15));
+}
+#weatherLocation {
+  text-align: center;
+  color: #797979;
+  font-size: 16px;
+}
+.weatherRightSide {
+  text-align: center;
+  padding-left: 1rem;
+}
+#weatherTemperature {
+  color: #404040;
+  font-size: 40px;
+  margin-bottom: 1rem;
+}
+#weatherDescription {
+  color: #797979;
+  font-size: 16px;
+}
 /* *Finished/Unfinished task bar*/
 .finishDiv {
   width: 75%;

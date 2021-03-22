@@ -1,4 +1,5 @@
 let todayDate;
+//getGeolocation();
 //* refresh page every day (at 00:00)
 /*addEventListener("DOMContentLoaded", () => {
   let todayDate = new Date();
@@ -32,7 +33,36 @@ function writeCurrentDate() {
     writeCurrentDate();
   }, remainingTime * 1000);
 }
-addEventListener("DOMContentLoaded", writeCurrentDate());
+addEventListener("DOMContentLoaded", writeCurrentDate(), getGeolocation());
+
+//* Set temp in header
+function getGeolocation() {
+  navigator.geolocation.getCurrentPosition(async function (position) {
+    let lat = await position.coords.latitude;
+    let long = await position.coords.longitude;
+    getWeather(lat, long);
+  });
+}
+
+function getWeather(lat, long) {
+  async function getData() {
+    let res = await fetch(url);
+    let info = await res.json();
+    info = info.data[0];
+    document.getElementById("weatherTemperature").innerHTML =
+      parseInt(info.temp) + " °C";
+    document.getElementById("weatherDescription").innerHTML =
+      info.weather.description;
+    document.getElementById("weatherLocation").innerHTML = info.city_name;
+    document.getElementById("weatherIcon").src =
+      "icons/" + info.weather.icon + ".png";
+  }
+
+  let apiKey = "1ed9439028fa4302a75bcf238dd59ec0";
+  let url = `https://api.weatherbit.io/v2.0/current?lat=${lat}&lon=${long}&key=${apiKey}`;
+
+  getData();
+}
 
 //* Mijenja vidljivost footer elemenata i fokusira input
 function footerVisibilitySwitch(footerSelection, editCircle) {
