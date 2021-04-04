@@ -7,6 +7,8 @@
 }
 body {
   background: linear-gradient(107.56deg, #20e2d7 0%, #f9fea5 100%);
+  background-repeat: round;
+  width: 100%;
   height: 100vh;
   overflow: hidden;
 }
@@ -112,9 +114,10 @@ p {
 }
 
 .task {
+  padding: 16px 0;
   margin-bottom: 16px;
   width: 100%;
-  height: 100px;
+  min-height: 100px;
   box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.25);
   border-radius: 32px;
 
@@ -145,9 +148,9 @@ p {
   justify-content: center;
 }
 .taskText {
-  overflow-y: hidden;
   font-size: 20px;
   line-height: 1.4;
+  overflow-wrap: anywhere;
 }
 .taskDate {
   display: none;
@@ -276,14 +279,19 @@ p {
   cursor: pointer;
 }
 .calendar-days:hover {
-  border: 3px solid #38b000;
+  border: 3px solid #48cae4;
 }
 .calendar-weekday {
   font-size: 1.25rem;
   font-weight: 600;
-  background-color: #7dcfb6;
+  height: 100%;
 }
-
+.weekday {
+  display: flex;
+  width: 100%;
+  height: calc(100% * (1 / 8));
+  background: linear-gradient(97.05deg, #ebc0fd 20%, #d8fdff 100%);
+}
 /* animacije: */
 @keyframes deleteTask {
   from {
@@ -335,5 +343,11 @@ p {
   to {
     opacity: 1;
     transform: translateX(0px);
+  }
+}
+
+@media (max-width: 900px) {
+  .main {
+    height: 70vh;
   }
 }

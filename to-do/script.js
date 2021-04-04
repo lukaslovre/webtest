@@ -1,5 +1,10 @@
+const viewport = document.querySelector("meta[name=viewport]");
+viewport.setAttribute(
+  "content",
+  viewport.content + ", height=" + window.innerHeight
+);
+
 let todayDate;
-//getGeolocation();
 //* refresh page every day (at 00:00)
 /*addEventListener("DOMContentLoaded", () => {
   let todayDate = new Date();
@@ -33,7 +38,13 @@ function writeCurrentDate() {
     writeCurrentDate();
   }, remainingTime * 1000);
 }
-addEventListener("DOMContentLoaded", writeCurrentDate(), getGeolocation());
+addEventListener(
+  "DOMContentLoaded",
+  writeCurrentDate(),
+  getGeolocation(),
+  getInitialTasks(),
+  setVisibilityOfTask()
+);
 
 //* Set temp in header
 function getGeolocation() {
@@ -108,21 +119,21 @@ function footerVisibilitySwitch(footerSelection, editCircle) {
     document.querySelector(".editTaskBtn").style.display = "none";
     document.querySelector(".cancelDateBtn").style.display = "none";
     document.querySelector(".addTaskBtn").style.display = "none";
-  }
 
-  //Toggle-a klasu aktive (display:none) za footer
-  /*for (let i = 0; i < footer.children.length; i++) {
-    footer.children[i].classList.toggle("footerActive");
+    setVisibilityOfTask();
   }
-  */
 
   //fokusira se na input
   inputBox.focus();
 }
+let taskCounter = parseInt(localStorage.getItem("taskCounter"));
+if (!taskCounter) taskCounter = 1;
 
 //* Funkcija za dodavanje novog taska (kreiranje li i ubacivanje u html):
 function addNewTask() {
   let textInput = document.querySelector("#taskInput");
+  let allTasksFromMemory = JSON.parse(localStorage.getItem("tasks"));
+
   if (textInput.value == "") {
     return;
   }
@@ -132,26 +143,99 @@ function addNewTask() {
   let textNode = document.createTextNode("");
   newLi.appendChild(textNode);
   newLi.classList.add("task", "unfinished");
-  /* newLi.innerHTML =
-    '<img class="emptyCircle" src="SVG/empty-circle.svg" alt="emptyCircle" onclick="completeTask(this)" /><img class="tickedCircle" src="SVG/ticked-circle.svg" alt="tickedCircle" /><div class="textPartofTask"><p class="taskText">' +
-    textInput.value +
-    '</p></div><img src="SVG/options-circle.svg" alt="optionsCircle"/>';
-    */
+
   //dole je novo
   newLi.innerHTML =
     '<img class="emptyCircle" src="SVG/empty-circle.svg" onclick="completeTask(this)"/><img class="tickedCircle" src="SVG/ticked-circle.svg"/><div class="textPartofTask"><p class="taskText">' +
     textInput.value +
     '</p><p class="taskDate"></p></div><div class="right-task-buttons"><img src="SVG/edit-circle.svg" class="right-hidden-button editCircle" onclick="footerVisibilitySwitch(\'edit\',this)"/><img src="SVG/thrash-circle.svg" class="right-hidden-button thrashCircle" onclick="deleteTask(this)"/><img src="SVG/date-circle.svg" class="right-hidden-button dateCircle" onclick="showCalendar(this)"/><img src="SVG/options-circle.svg" class="optionsCircle" onclick="expandRightButton(this)"/></div>';
-  // TODO: Doda id sa counterom, dodati kad napravim counter:
-  // newLi.setAttribute("id",counter)
+
+  newLi.setAttribute("id", taskCounter);
   document.querySelector(".allTasksUl").appendChild(newLi);
 
-  //skrivanje footera i clear-anje input forme
-  textInput.value = "";
+  // !upisivanje u memoriju
 
+  let attrib;
+  if (allTasksFromMemory) {
+    attrib = {
+      id: taskCounter,
+      taskText: textInput.value,
+      state: "unfinished",
+    };
+  } else {
+    attrib = [
+      {
+        id: taskCounter,
+        taskText: textInput.value,
+        state: "unfinished",
+      },
+    ];
+  }
+
+  if (allTasksFromMemory) {
+    allTasksFromMemory.push(attrib);
+
+    localStorage.setItem("tasks", JSON.stringify(allTasksFromMemory));
+  } else {
+    localStorage.setItem("tasks", JSON.stringify(attrib));
+  }
+
+  // !u memoriju
+
+  //skrivanje footera i clear-anje input forme
+  taskCounter++;
+  localStorage.setItem("taskCounter", taskCounter);
+  textInput.value = "";
   footerVisibilitySwitch("default");
 }
 
+function getInitialTasks() {
+  let allTasksFromMemory = JSON.parse(localStorage.getItem("tasks"));
+  if (!allTasksFromMemory) return;
+
+  for (let i = 0; i < allTasksFromMemory.length; i++) {
+    console.log(allTasksFromMemory[i]);
+    if (!allTasksFromMemory[i].date) allTasksFromMemory[i].date = "";
+
+    // dio za kreiranje novog taska:
+    let newLi = document.createElement("li");
+    let textNode = document.createTextNode("");
+    newLi.appendChild(textNode);
+    newLi.classList.add("task", allTasksFromMemory[i].state); //TODO: poslati i state
+
+    newLi.innerHTML =
+      '<img class="emptyCircle" src="SVG/empty-circle.svg" onclick="completeTask(this)"/><img class="tickedCircle" src="SVG/ticked-circle.svg"/><div class="textPartofTask"><p class="taskText">' +
+      allTasksFromMemory[i].taskText +
+      '</p><p class="taskDate">' +
+      allTasksFromMemory[i].date +
+      '</p></div><div class="right-task-buttons"><img src="SVG/edit-circle.svg" class="right-hidden-button editCircle" onclick="footerVisibilitySwitch(\'edit\',this)"/><img src="SVG/thrash-circle.svg" class="right-hidden-button thrashCircle" onclick="deleteTask(this)"/><img src="SVG/date-circle.svg" class="right-hidden-button dateCircle" onclick="showCalendar(this)"/><img src="SVG/options-circle.svg" class="optionsCircle" onclick="expandRightButton(this)"/></div>';
+
+    newLi.setAttribute("id", allTasksFromMemory[i].id);
+    if (allTasksFromMemory[i].date != "") {
+      newLi.querySelector(".taskDate").style.display = "initial";
+
+      let deconstructedSelectedDate = allTasksFromMemory[
+        i
+      ].realDateFormat.split("-");
+      deconstructedSelectedDate[2] = deconstructedSelectedDate[2].slice(0, 2);
+      let selectedDate = new Date(
+        deconstructedSelectedDate[0],
+        parseInt(deconstructedSelectedDate[1]) - 1,
+        parseInt(deconstructedSelectedDate[2]) + 1
+      );
+
+      if (selectedDate > todayDate) {
+        newLi.querySelector(".taskDate").style.backgroundColor = "#695cff";
+      } else {
+        newLi.querySelector(".taskDate").style.backgroundColor = "#FF5C5C";
+      }
+    }
+
+    document.querySelector(".allTasksUl").appendChild(newLi);
+  }
+}
+
+//localStorage.clear();
 /*
 
 
@@ -170,10 +254,12 @@ function completeTask(emptyCircle) {
   if (isLocked) {
     return;
   }
+  let allTasksFromMemory = JSON.parse(localStorage.getItem("tasks"));
   let task = emptyCircle.parentNode;
   let tickedCircle = task.querySelector(".tickedCircle");
   let taskText = task.querySelector(".taskText");
   isLocked = 1;
+
   //animacije:
   if (task.classList.contains("unfinished")) {
     //ako je unfinished->finished
@@ -182,6 +268,12 @@ function completeTask(emptyCircle) {
     taskText.style.textDecoration = "line-through";
     task.style.animation = "300ms LeftToRightFadeOut 400ms ease-in forwards";
     task.classList.replace("unfinished", "finished");
+    for (let i = 0; i < allTasksFromMemory.length; i++) {
+      if (allTasksFromMemory[i].id == task.id) {
+        allTasksFromMemory[i].state = "finished";
+        console.log(allTasksFromMemory);
+      }
+    }
   } else {
     //ako je finished->unfinished
     emptyCircle.style.opacity = "1";
@@ -189,7 +281,13 @@ function completeTask(emptyCircle) {
     taskText.style.textDecoration = "none";
     task.style.animation = "300ms RightToLeftFadeOut 400ms ease-in forwards";
     task.classList.replace("finished", "unfinished");
+    for (let i = 0; i < allTasksFromMemory.length; i++) {
+      if (allTasksFromMemory[i].id == task.id) {
+        allTasksFromMemory[i].state = "unfinished";
+      }
+    }
   }
+  localStorage.setItem("tasks", JSON.stringify(allTasksFromMemory));
 
   setTimeout(() => {
     setVisibilityOfTask();
@@ -210,6 +308,7 @@ function setVisibilityOfTask() {
       element.style.opacity = "0";
       element.style.display = "none";
     });
+    document.querySelector(".newTaskBtn").style.display = "initial";
   }
   //ako smo na finished tabu: prikazi finished i sakri unfinished
   else {
@@ -218,8 +317,14 @@ function setVisibilityOfTask() {
       element.style.display = "none";
     });
     finishedTasks.forEach((element) => {
+      console.log(element);
+      element.querySelector(".emptyCircle").style.opacity = "0";
+      element.querySelector(".tickedCircle").style.opacity = "1";
+      element.querySelector(".taskText").style.textDecoration = "line-through";
+
       element.style.display = "flex";
     });
+    document.querySelector(".newTaskBtn").style.display = "none";
   }
 }
 
@@ -308,6 +413,15 @@ function expandRightButton(optionsBtn) {
 //* funkcija briše task (delete task gumb):
 function deleteTask(deleteBtn) {
   let task = deleteBtn.parentNode.parentNode;
+
+  let allTasksFromMemory = JSON.parse(localStorage.getItem("tasks"));
+  for (let i = 0; i < allTasksFromMemory.length; i++) {
+    if (allTasksFromMemory[i].id == task.id) {
+      allTasksFromMemory.splice(i, 1);
+    }
+  }
+  localStorage.setItem("tasks", JSON.stringify(allTasksFromMemory));
+
   task.style.animation = "250ms deleteTask 50ms ease-in forwards";
   setTimeout(() => {
     task.remove();
@@ -322,6 +436,14 @@ function submitEditTask() {
   if (textInput.value == "") {
     return;
   }
+
+  let allTasksFromMemory = JSON.parse(localStorage.getItem("tasks"));
+  for (let i = 0; i < allTasksFromMemory.length; i++) {
+    if (allTasksFromMemory[i].id == currentlySelectedTask.id) {
+      allTasksFromMemory[i].taskText = textInput.value;
+    }
+  }
+  localStorage.setItem("tasks", JSON.stringify(allTasksFromMemory));
 
   currentlySelectedTask.querySelector(".taskText").innerHTML = textInput.value;
 
@@ -389,14 +511,18 @@ function generateCalendar() {
   for (let i = 1; i <= 42; i++) {
     if (i >= firstDay && i <= daysInMonth + firstDay - 1) {
       document.getElementById(`day-${i}`).innerHTML = dayCounter;
-      document.getElementById(`day-${i}`).style.backgroundColor = "#dfffd6";
+      document.getElementById(`day-${i}`).style.backgroundColor = "#dbefff"; // #dfffd6
       dayCounter++;
     } else {
       document.getElementById(`day-${i}`).innerHTML = "";
-      document.getElementById(`day-${i}`).style.backgroundColor = "#f3ffe1";
+      document.getElementById(`day-${i}`).style.backgroundColor = "#fcf7fc"; //#f3ffe1
     }
-    if (i == todayDate.getDate() && month == todayDate.getMonth() + 1) {
-      document.getElementById(`day-${i}`).style.backgroundColor = "#7dcfb6";
+    if (
+      i == todayDate.getDate() + firstDay - 1 &&
+      month == todayDate.getMonth() + 1 &&
+      year == todayDate.getFullYear()
+    ) {
+      document.getElementById(`day-${i}`).style.backgroundColor = "#e7cbfd"; //#7dcfb6
     }
   }
 }
@@ -420,11 +546,11 @@ calendarDays.forEach((day) => {
     if (day.innerHTML == "") {
       return;
     } else {
+      taskDateElement.style.display = "initial";
       //provjera dali je odabrani datum u trenutnoj godini
       if (year == todayDate.getFullYear()) {
-        taskDateElement.style.display = "initial";
         //provjera dali je odabrani dan danas:
-        if (
+        /* if (
           odabraniDatum.getDate() == todayDate.getDate() &&
           odabraniDatum.getMonth() == odabraniDatum.getMonth()
         ) {
@@ -444,14 +570,15 @@ calendarDays.forEach((day) => {
         ) {
           taskDateElement.innerHTML = "Yesterday";
         }
+        
         //ako nije onda ispisati cijeli datum
         else {
-          taskDateElement.innerHTML = day.innerHTML + ", " + monthFullName;
-        }
+          */
+        taskDateElement.innerHTML = day.innerHTML + ", " + monthFullName;
+        //}
       }
       //ako nije u trenutnoj godini:
       else {
-        taskDateElement.style.display = "initial";
         taskDateElement.innerHTML =
           day.innerHTML + ", " + monthFullName + ", " + year;
       }
@@ -462,6 +589,19 @@ calendarDays.forEach((day) => {
       } else {
         taskDateElement.style.backgroundColor = "#FF5C5C";
       }
+
+      // Upisivanje u memoriju:
+      let taskId = currentlySelectedTask.id;
+      let allTasksFromMemory = JSON.parse(localStorage.getItem("tasks"));
+
+      allTasksFromMemory.forEach((task) => {
+        if (task.id == taskId) {
+          task.date = taskDateElement.innerHTML;
+          task.realDateFormat = odabraniDatumJučer;
+        }
+      });
+      console.log(allTasksFromMemory);
+      localStorage.setItem("tasks", JSON.stringify(allTasksFromMemory));
 
       hideCalendar();
     }
@@ -502,16 +642,3 @@ function getFirstDay(year, month) {
   }
   return firstDay;
 }
-
-/*
-
-ovo je nesto probno za prosirenje visine taska
-
-let textHeight = document.querySelector(".taskText").scrollHeight;
-console.log(textHeight);
-let task = document.querySelector(".task");
-hajt = 50 + textHeight + "px";
-document.querySelector(".task").style.height = hajt;
-console.log(hajt);
-*/
-//TODO: kada se bira datum: kreirati p element, appendati na .textPartofTask div, i onda classList.add("taskDate");
