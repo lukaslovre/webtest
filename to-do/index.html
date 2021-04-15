@@ -102,47 +102,6 @@
           <div class="calendar-days" id="day-42"></div>
         </div>
         <ul class="allTasksUl">
-          <!-- Task 1 test -->
-          <li class="task unfinished" id="0">
-            <img
-              class="emptyCircle"
-              src="SVG/empty-circle.svg"
-              alt="emptyCircle"
-              onclick="completeTask(this)"
-            />
-            <img
-              class="tickedCircle"
-              src="SVG/ticked-circle.svg"
-              alt="tickedCircle"
-            />
-            <div class="textPartofTask">
-              <p class="taskText">Ovo je task za primjer, tekst ovog</p>
-              <p class="taskDate"></p>
-            </div>
-            <div class="right-task-buttons">
-              <img
-                src="SVG/edit-circle.svg"
-                class="right-hidden-button editCircle"
-                onclick="footerVisibilitySwitch('edit',this)"
-              />
-              <img
-                src="SVG/thrash-circle.svg"
-                class="right-hidden-button thrashCircle"
-                onclick="deleteTask(this)"
-              />
-              <img
-                src="SVG/date-circle.svg"
-                class="right-hidden-button dateCircle"
-                onclick="showCalendar(this)"
-              />
-              <img
-                src="SVG/options-circle.svg"
-                alt="optionsCircle"
-                class="optionsCircle"
-                onclick="expandRightButton(this)"
-              />
-            </div>
-          </li>
         </ul>
       </div>
       <div class="footer">
@@ -156,7 +115,6 @@
             id="taskInput"
             class="hidden"
             spellcheck="false"
-            autocomplete="off"
           />
           <button class="addTaskBtn hidden" onclick="addNewTask()">Add</button>
           <button class="editTaskBtn hidden" onclick="submitEditTask()">

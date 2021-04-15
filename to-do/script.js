@@ -5,23 +5,15 @@ viewport.setAttribute(
 );
 
 let todayDate;
-//* refresh page every day (at 00:00)
-/*addEventListener("DOMContentLoaded", () => {
-  let todayDate = new Date();
-  todayDate = todayDate.getHours() * 3600 + todayDate.getMinutes() * 60 + todayDate.getSeconds();
-  let remainingTime = 86400 - todayDate;
-  console.log(remainingTime);
-  setTimeout(() => {
-    location.reload();
-  }, remainingTime * 1000);
-});
-*/
+let yesterdayDate;
 
+//* refresh page every day (at 00:00)
 //* set date in header
 function writeCurrentDate() {
   //upisivanje u header
   let headerDate = document.querySelector("#headerDate");
   todayDate = new Date();
+  yesterdayDate = new Date(Date.now() - 86400000);
   let weekday = todayDate.toLocaleDateString(undefined, { weekday: "long" }); //undefined bi trebalo dati system default
   let day = todayDate.getDate();
   let month = todayDate.toLocaleDateString(undefined, { month: "long" });
@@ -41,7 +33,7 @@ function writeCurrentDate() {
 addEventListener(
   "DOMContentLoaded",
   writeCurrentDate(),
-  getGeolocation(),
+  //!getGeolocation(),
   getInitialTasks(),
   setVisibilityOfTask()
 );
@@ -77,7 +69,6 @@ function getWeather(lat, long) {
 
 //* Mijenja vidljivost footer elemenata i fokusira input
 function footerVisibilitySwitch(footerSelection, editCircle) {
-  const footer = document.querySelector(".footer");
   const inputBox = document.querySelector("#taskInput");
 
   //provjerava se dali se dodaje novi task ili edita stari:
@@ -153,8 +144,6 @@ function addNewTask() {
   newLi.setAttribute("id", taskCounter);
   document.querySelector(".allTasksUl").appendChild(newLi);
 
-  // !upisivanje u memoriju
-
   let attrib;
   if (allTasksFromMemory) {
     attrib = {
@@ -174,13 +163,10 @@ function addNewTask() {
 
   if (allTasksFromMemory) {
     allTasksFromMemory.push(attrib);
-
     localStorage.setItem("tasks", JSON.stringify(allTasksFromMemory));
   } else {
     localStorage.setItem("tasks", JSON.stringify(attrib));
   }
-
-  // !u memoriju
 
   //skrivanje footera i clear-anje input forme
   taskCounter++;
@@ -189,19 +175,56 @@ function addNewTask() {
   footerVisibilitySwitch("default");
 }
 
+function getRealDateFromText(text) {
+  let deconstructedSelectedDate = text.split("-");
+  deconstructedSelectedDate[2] = deconstructedSelectedDate[2].slice(0, 2);
+  let realDate = new Date(
+    deconstructedSelectedDate[0],
+    parseInt(deconstructedSelectedDate[1]) - 1,
+    parseInt(deconstructedSelectedDate[2])
+  );
+  return realDate;
+}
+
 function getInitialTasks() {
+  if (document.querySelector(".allTasksUl").innerHTML != "") {
+    document.querySelector(".allTasksUl").innerHTML = "";
+  }
   let allTasksFromMemory = JSON.parse(localStorage.getItem("tasks"));
   if (!allTasksFromMemory) return;
 
+  // Sortiranje:
   for (let i = 0; i < allTasksFromMemory.length; i++) {
-    console.log(allTasksFromMemory[i]);
+    if (!allTasksFromMemory[i].date) {
+      allTasksFromMemory[i].realDateFormat = Infinity;
+    } else {
+      allTasksFromMemory[i].realDateFormat = getRealDateFromText(
+        allTasksFromMemory[i].realDateFormat
+      );
+    }
+  }
+  let len = allTasksFromMemory.length;
+  for (let i = 0; i < len; i++) {
+    for (let j = 0; j < len - 1; j++) {
+      if (
+        allTasksFromMemory[j].realDateFormat >
+        allTasksFromMemory[j + 1].realDateFormat
+      ) {
+        let tmp = allTasksFromMemory[j];
+        allTasksFromMemory[j] = allTasksFromMemory[j + 1];
+        allTasksFromMemory[j + 1] = tmp;
+      }
+    }
+  }
+
+  for (let i = 0; i < allTasksFromMemory.length; i++) {
     if (!allTasksFromMemory[i].date) allTasksFromMemory[i].date = "";
 
     // dio za kreiranje novog taska:
     let newLi = document.createElement("li");
     let textNode = document.createTextNode("");
     newLi.appendChild(textNode);
-    newLi.classList.add("task", allTasksFromMemory[i].state); //TODO: poslati i state
+    newLi.classList.add("task", allTasksFromMemory[i].state);
 
     newLi.innerHTML =
       '<img class="emptyCircle" src="SVG/empty-circle.svg" onclick="completeTask(this)"/><img class="tickedCircle" src="SVG/ticked-circle.svg"/><div class="textPartofTask"><p class="taskText">' +
@@ -209,33 +232,21 @@ function getInitialTasks() {
       '</p><p class="taskDate">' +
       allTasksFromMemory[i].date +
       '</p></div><div class="right-task-buttons"><img src="SVG/edit-circle.svg" class="right-hidden-button editCircle" onclick="footerVisibilitySwitch(\'edit\',this)"/><img src="SVG/thrash-circle.svg" class="right-hidden-button thrashCircle" onclick="deleteTask(this)"/><img src="SVG/date-circle.svg" class="right-hidden-button dateCircle" onclick="showCalendar(this)"/><img src="SVG/options-circle.svg" class="optionsCircle" onclick="expandRightButton(this)"/></div>';
-
     newLi.setAttribute("id", allTasksFromMemory[i].id);
+
     if (allTasksFromMemory[i].date != "") {
       newLi.querySelector(".taskDate").style.display = "initial";
 
-      let deconstructedSelectedDate = allTasksFromMemory[
-        i
-      ].realDateFormat.split("-");
-      deconstructedSelectedDate[2] = deconstructedSelectedDate[2].slice(0, 2);
-      let selectedDate = new Date(
-        deconstructedSelectedDate[0],
-        parseInt(deconstructedSelectedDate[1]) - 1,
-        parseInt(deconstructedSelectedDate[2]) + 1
-      );
-
-      if (selectedDate > todayDate) {
+      if (allTasksFromMemory[i].realDateFormat >= yesterdayDate) {
         newLi.querySelector(".taskDate").style.backgroundColor = "#695cff";
       } else {
         newLi.querySelector(".taskDate").style.backgroundColor = "#FF5C5C";
       }
     }
-
     document.querySelector(".allTasksUl").appendChild(newLi);
   }
 }
 
-//localStorage.clear();
 /*
 
 
@@ -453,7 +464,7 @@ function submitEditTask() {
 
 /*
 
-            KALENDAR:
+            !KALENDAR:
 
 
 */
@@ -602,7 +613,7 @@ calendarDays.forEach((day) => {
       });
       console.log(allTasksFromMemory);
       localStorage.setItem("tasks", JSON.stringify(allTasksFromMemory));
-
+      getInitialTasks(); //zove se funckija kako bi se sortiralo po datumu
       hideCalendar();
     }
   });
