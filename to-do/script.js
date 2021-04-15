@@ -33,7 +33,7 @@ function writeCurrentDate() {
 addEventListener(
   "DOMContentLoaded",
   writeCurrentDate(),
-  //!getGeolocation(),
+  getGeolocation(),
   getInitialTasks(),
   setVisibilityOfTask()
 );
